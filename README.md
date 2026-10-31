@@ -1,37 +1,31 @@
-## Welcome to GitHub Pages
+# tphiepbk-dashboard
+My customized dashboard for personal needs
 
-You can use the [editor on GitHub](https://github.com/tphiepbk/tphiepbk.github.io/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+# Static website
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+`public_html` is the website root. Deploy its contents directly to a static host; no build step or package installation is needed.
 
-### Markdown
+## Structure
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+- `index.html`: dashboard and main entry point.
+- `pages/`: AWS Cloud Practitioner practice bank and SecondShift architecture.
+- `assets/css/main.css`: dashboard styles. Each secondary page has its own stylesheet alongside it.
+- `assets/js/`: page-specific practice-bank behavior and Mermaid diagram setup.
+- `assets/images/` and `assets/fonts/`: reserved for future assets; currently empty. The site uses system fonts.
 
-```markdown
-Syntax highlighted code block
+## Preview
 
-# Header 1
-## Header 2
-### Header 3
+From this directory, run:
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```sh
+python3 -m http.server 8000
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Open http://localhost:8000/ in a browser. Stop the server with Ctrl+C.
 
-### Jekyll Themes
+## Editing and hosting
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/tphiepbk/tphiepbk.github.io/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+Edit the HTML in `pages/` and its matching CSS or JavaScript under `assets/`. Keep links relative so the site can also be hosted under a URL subdirectory. Update the dashboard when adding pages.
 
-### Support or Contact
+SecondShift diagrams load Mermaid from jsDelivr and require internet access. No local images or custom font files are required.
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.

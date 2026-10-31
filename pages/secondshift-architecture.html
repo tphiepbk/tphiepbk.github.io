@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SecondShift — System Architecture</title>
+<link rel="stylesheet" href="../assets/css/secondshift-architecture.css">
+</head>
+<body>
+<header><nav aria-label="Main navigation"><a href="../">← Dashboard</a></nav><div class="eyebrow">System architecture · source snapshot · 25 October 2026</div><h1>SecondShift</h1><p>A C++23 backend foundation for a chat application. The implemented runtime covers HTTPS authentication, account lifecycle management, PostgreSQL persistence, and a reusable asynchronous HTTP server.</p><span class="tag">C++23</span><span class="tag">Boost.Beast / Asio</span><span class="tag">PostgreSQL 16</span><span class="tag">OpenSSL</span><span class="tag">Docker Compose development</span></header>
+<main>
+<section><h2>Runtime topology</h2><p>Client traffic enters the TLS listener. The authentication service routes requests to account or session logic; repositories use a bounded connection pool to access PostgreSQL.</p><div class="mermaid topology">flowchart LR
+ C[HTTPS client] -->|TLS| L[Listener / Asio io_context]
+ L --> H[HttpSession · Beast]
+ H --> R[Router]
+ R -->|auth routes| AC[AuthController]
+ AC --> AM[AccountManager]
+ AC --> SM[SessionManager]
+ AM --> UR[UserRepository]
+ AM -->|atomic account update and session revocation| SR[SessionRepository]
+ SM -->|token lookup and access-session validation| SR
+ UR --> P[PostgresConnectionPool]
+ SR --> P
+ P -->|pqxx transactions| DB[(PostgreSQL)]
+ SM -->|RS256 JWT sign / verify| K[JWT RSA key pair]
+ SM -->|SHA-256 refresh token hash| SR
+ subgraph Shared libraries
+ L
+ H
+ R
+ P
+ end</div></section>
+<section><h2>Request and token flows</h2><div class="grid"><div class="card"><h3>Account creation</h3><p><code>POST /api/v1/auth/users</code></p><p>JSON validation → uniqueness checks → scrypt password hash → database insert. Response uses an explicit field allowlist.</p></div><div class="card"><h3>Login</h3><p><code>POST /api/v1/auth/login</code></p><p>Look up active account → verify scrypt hash → create session → persist refresh-token hash → return short-lived access JWT and opaque refresh token.</p></div><div class="card"><h3>Access renewal</h3><p><code>POST /api/v1/auth/refresh/access</code></p><p>Validate refresh token against stored hash and account state → issue a new access token. Refresh token lifetime is unchanged.</p></div><div class="card"><h3>Refresh rotation</h3><p><code>POST /api/v1/auth/refresh</code></p><p>Validate token → atomically replace its stored hash → return a new opaque refresh token with a fresh seven-day lifetime. The session ID stays the same; concurrent reuse allows at most one rotation.</p></div><div class="card"><h3>Current account</h3><p><code>GET /api/v1/auth/me</code></p><p>Verify JWT signature, issuer, audience, and time claims → check the session and account in PostgreSQL → return the active account’s login name and email.</p></div><div class="card"><h3>Change password</h3><p><code>PATCH /api/v1/auth/changemypwd</code></p><p>Require a valid Bearer token, current password, and matching new-password fields. Atomically update the password hash and revoke all sessions, including the current session. Log in again afterwards.</p></div><div class="card"><h3>Delete own account</h3><p><code>DELETE /api/v1/me</code></p><p>Require a valid Bearer token and current password. Atomically mark the account DELETED and revoke all sessions. Rows remain stored; login names and emails stay reserved.</p></div></div><div class="mermaid">sequenceDiagram
+ participant C as Client
+ participant T as TLS / HTTP transport
+ participant A as AuthController
+ participant S as SessionManager
+ participant DB as PostgreSQL
+ C->>T: POST /login (JSON)
+ T->>T: TLS handshake, body limit, parse request
+ T->>A: routed request
+ A->>DB: authenticate account (via AccountManager/Repository)
+ DB-->>A: account + password hash
+ A->>A: verify scrypt password
+ A->>S: create_session(user_id)
+ S->>DB: insert session + refresh hash
+ DB-->>S: commit
+ S-->>A: access JWT + refresh token
+ A-->>T: 200, no-store token response
+ T-->>C: HTTPS response</div></section>
+<section><h2>Account lifecycle and revocation</h2><p>Protected account actions share <code>AuthController::authenticate_request()</code>. Identity comes from the verified JWT subject; clients cannot choose a target account ID.</p><div class="mermaid">sequenceDiagram
+ participant C as Client
+ participant A as AuthController
+ participant S as SessionManager
+ participant M as AccountManager
+ participant DB as PostgreSQL
+ C->>A: PATCH password or DELETE account + Bearer JWT
+ A->>S: verify_access_token(jwt)
+ S->>S: Verify RS256 and required claims
+ S->>DB: Check session ownership, expiry, revocation and account state
+ DB-->>S: Eligible session and account
+ S-->>A: Verified user ID
+ A->>M: Change password or delete own account
+ M->>M: Verify current password; validate new password if changing
+ M->>DB: Begin transaction; lock eligible account and recheck password hash
+ M->>DB: Update password hash OR mark account deleted
+ M->>DB: Revoke all unrevoked sessions
+ M->>DB: Commit
+ M-->>A: Success
+ A-->>C: 200, no-store; existing tokens rejected on subsequent checks
+</div><p class="small">Password changes require <code>current_pwd</code>, <code>new_pwd</code>, and <code>reenter_new_pwd</code>; new passwords must exceed six bytes. Deletion requires <code>current_pwd</code>. Neither operation issues replacement tokens.</p></section>
+<section><h2>Components and responsibilities</h2><div class="grid"><div class="card"><h3>HTTP library</h3><p>Listener accepts TCP, TLS sessions parse requests and apply a 10 KiB body limit, Router matches method/path, SharedState owns routes. WebSocket session support exists in the shared transport layer.</p></div><div class="card"><h3>Auth service</h3><p>Main loads INI configuration and keys; Authentication initializes schema and starts the listener. Controller handles request/response validation. Managers hold account and token business logic. AccountManager coordinates password changes and soft deletion with session revocation in a single transaction.</p></div><div class="card"><h3>PostgreSQL library</h3><p>Connection pool owns fixed connections; move-only leases return connections on scope exit. Repository operations use pqxx transactions. TLS uses <code>verify-full</code> in the configured development setup.</p></div><div class="card"><h3>Development environment</h3><p>Compose runs a development app container and PostgreSQL. The app generates a CA and database certificate; the database receives only its server certificate and key. Build uses Conan and CMake.</p></div></div></section>
+<section><h2>Data model and security boundaries</h2><div class="mermaid">erDiagram
+ Users ||--o{ Sessions : owns
+ Users {
+   uuid id PK
+   varchar login_name UK
+   varchar normalized_login_name UK
+   varchar email UK
+   text password_hash
+   varchar status
+   timestamptz created_at
+   timestamptz updated_at
+   timestamptz deleted_at
+ }
+ Sessions {
+   uuid session_id PK
+   uuid user_id FK
+   char token_hash UK
+   timestamptz created_at
+   timestamptz expires_at
+   timestamptz revoked_at
+ }</div><ul><li>Passwords are stored as salted scrypt hashes; refresh tokens are random and only their SHA-256 hashes are stored.</li><li>Access tokens use RS256 with issuer <code>SecondShift.Auth</code>, audience <code>SecondShift</code>, subject user UUID, session ID, and 10-minute lifetime. Refresh tokens last seven days.</li><li>Refresh checks session expiry, revocation, and account active/deleted state. Protected account endpoints also verify the JWT’s <code>sid</code> belongs to its subject and references an unrevoked, unexpired session on an active account.</li><li>Database credentials and JWT private key paths come from service configuration/environment; development TLS CA and certificates are mounted as volumes.</li></ul><div class="notice">Access-token verification queries PostgreSQL on each protected request. Committed session revocation causes subsequent checks to reject existing access tokens. Refresh-token rotation alone preserves the session and does not invalidate existing access tokens.</div></section>
+<section><h2>Configuration and deployment</h2><div class="grid"><div class="card"><h3>Build</h3><p>Conan dependencies feed CMake; CMake builds shared libraries and service executables under <code>Server/</code>.</p></div><div class="card"><h3>Auth service configuration</h3><p><code>AuthenticationService.ini</code> sets bind address/port, worker threads, DB pool size and env file, log file, TLS certificate/key, and JWT key files. Relative paths resolve against the INI file directory.</p></div><div class="card"><h3>Compose network</h3><p>App reaches database as <code>postgres:5432</code>; host ports 8080 and 5432 are published. PostgreSQL data persists in a named volume.</p></div></div></section>
+<section><h2>Current scope and known gaps</h2><div class="grid"><div class="card"><h3>Implemented</h3><ul><li>Seven authentication and account endpoints listed above</li><li>Password changes and account soft deletion with atomic session revocation</li><li>Database-backed access-token session checks</li><li>HTTP routing and TLS listener</li><li>Users/Sessions schema creation</li><li>Postgres pool and transaction wrappers</li><li>Example HTTP service</li></ul></div><div class="card"><h3>Not implemented or incomplete</h3><ul><li>Messaging, conversations, presence, and chat persistence services</li><li>Schema migration framework; current migrate() is a no-op</li><li>Standalone logout and session-management endpoints</li><li>Authorized password-reset and initial-password setup flows</li><li>Rate limiting and expanded password policy</li><li>Production secrets/certificate lifecycle and deployment configuration</li></ul></div></div><p class="small">This page describes the repository’s current implementation, not the aspirational requirements in the architecture diagrams. Development defaults are not production credentials.</p></section>
+<section><h2>Evidence and validation scope</h2><p>The current route registrations and implementation take precedence over stale statements in <code>Server/Services/Auth/API.md</code> about missing deletion routes and absent session-revocation checks.</p><p>Repository integration scripts cover session management and password changes in <code>Server/Services/Auth/tests/</code>. They were inspected as repository artifacts, not run for this page update. Messaging and chat persistence remain outside the implemented service scope.</p></section>
+</main><footer>Source snapshot: 25 October 2026 · Commit c265e4b · Based on registered routes, managers, repositories, schema, and build configuration. Static source analysis; service behavior was not exercised.</footer>
+<script type="module" src="../assets/js/secondshift-architecture.js"></script>
+</body></html>
