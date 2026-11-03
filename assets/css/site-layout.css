@@ -1,0 +1,5 @@
+body > header,body > main,body > footer{box-sizing:border-box;width:100%;max-width:none;margin-left:auto;margin-right:auto;padding:24px 48px}
+body > header{position:relative;padding-top:48px;padding-right:136px;padding-bottom:0;min-height:144px}
+body > footer{padding-bottom:48px}
+.site-logo{position:absolute;top:20px;right:20px;width:96px;height:96px;border-radius:50%;object-fit:cover}
+@media(max-width:760px){body > header,body > main,body > footer{padding-left:24px;padding-right:24px}body > header{padding-top:32px;padding-right:136px}}

@@ -12,7 +12,7 @@ The repository root is the website root. Deploy its contents directly to a stati
 - `resources/`: PDF files linked from `pages/pdf-library.html`.
 - `assets/css/main.css`: dashboard styles. Each secondary page has its own stylesheet alongside it.
 - `assets/js/`: page-specific practice-bank behavior and Mermaid diagram setup.
-- `assets/images/` and `assets/fonts/`: reserved for future assets; currently empty. The site uses system fonts.
+- `assets/images/logo.png`: browser-tab icon shared by all pages. The site uses system fonts.
 
 ## Preview
 
@@ -28,7 +28,7 @@ Open http://localhost:8000/ in a browser. Stop the server with Ctrl+C.
 
 Edit the HTML in `pages/` and its matching CSS or JavaScript under `assets/`. Keep links relative so the site can also be hosted under a URL subdirectory. Update the dashboard when adding pages.
 
-SecondShift diagrams load Mermaid from jsDelivr and require internet access. No local images or custom font files are required.
+SecondShift diagrams load Mermaid from jsDelivr and require internet access. No custom font files are required.
 
 To add a PDF, store it in `resources/` and add a link in `pages/pdf-library.html` using `../resources/your-file.pdf`. The library list is maintained manually.
 

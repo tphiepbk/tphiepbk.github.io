@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SecondShift — System Architecture</title>
 <link rel="stylesheet" href="../assets/css/secondshift-architecture.css">
+<link rel="icon" type="image/png" href="../assets/images/logo.png">
+<link rel="stylesheet" href="../assets/css/site-layout.css?v=2">
 </head>
 <body>
-<header><nav aria-label="Main navigation"><a href="../">← Dashboard</a></nav><div class="eyebrow">System architecture · source snapshot · 25 October 2026</div><h1>SecondShift</h1><p>A C++23 backend foundation for a chat application. The implemented runtime covers HTTPS authentication, account lifecycle management, PostgreSQL persistence, and a reusable asynchronous HTTP server.</p><span class="tag">C++23</span><span class="tag">Boost.Beast / Asio</span><span class="tag">PostgreSQL 16</span><span class="tag">OpenSSL</span><span class="tag">Docker Compose development</span></header>
+<header><img class="site-logo" src="../assets/images/logo.png" alt="TPH dragon logo" width="96" height="96"><nav aria-label="Main navigation"><a href="../">← Dashboard</a></nav><div class="eyebrow">System architecture · source snapshot · 25 October 2026</div><h1>SecondShift</h1><p>A C++23 backend foundation for a chat application. The implemented runtime covers HTTPS authentication, account lifecycle management, PostgreSQL persistence, and a reusable asynchronous HTTP server.</p><span class="tag">C++23</span><span class="tag">Boost.Beast / Asio</span><span class="tag">PostgreSQL 16</span><span class="tag">OpenSSL</span><span class="tag">Docker Compose development</span></header>
 <main>
 <section><h2>Runtime topology</h2><p>Client traffic enters the TLS listener. The authentication service routes requests to account or session logic; repositories use a bounded connection pool to access PostgreSQL.</p><div class="mermaid topology">flowchart LR
  C[HTTPS client] -->|TLS| L[Listener / Asio io_context]
