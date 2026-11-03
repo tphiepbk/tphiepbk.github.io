@@ -3,7 +3,7 @@ My customized dashboard for personal needs
 
 # Static website
 
-The repository root is the website root. Deploy its contents directly to a static host; no build step or package installation is needed.
+The repository root is the website root. The site is hosted using an Apache httpd Docker container; no build step or package installation is needed.
 
 ## Structure
 
@@ -16,13 +16,8 @@ The repository root is the website root. Deploy its contents directly to a stati
 
 ## Preview
 
-From this directory, run:
-
-```sh
-python3 -m http.server 8000
-```
-
-Open http://localhost:8000/ in a browser. Stop the server with Ctrl+C.
+Use the existing httpd Docker container and its configured host address and port.
+Check the container’s port and volume mappings to confirm the URL and which files it serves.
 
 ## Editing and hosting
 
