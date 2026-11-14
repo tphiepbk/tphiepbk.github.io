@@ -8,7 +8,7 @@ The repository root is the website root. The site is hosted using an Apache http
 ## Structure
 
 - `index.html`: dashboard and main entry point.
-- `pages/`: AWS Cloud Practitioner practice bank, SecondShift architecture, and PDF library.
+- `pages/`: AWS Cloud Practitioner practice bank and knowledge map, SecondShift architecture, and PDF library.
 - `resources/`: PDF files linked from `pages/pdf-library.html`.
 - `assets/css/main.css`: dashboard styles. Each secondary page has its own stylesheet alongside it.
 - `assets/js/`: page-specific practice-bank behavior and Mermaid diagram setup.

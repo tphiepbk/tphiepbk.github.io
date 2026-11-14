@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="A visual AWS Cloud Practitioner study guide in 20 sections, with concept maps, service comparisons, and recall questions based on the v45 course slides.">
+<title>AWS Cloud Practitioner — Knowledge Map</title>
+<link rel="icon" type="image/png" href="../assets/images/logo.png">
+<link rel="stylesheet" href="../assets/css/main.css?v=20261103-logo-96">
+<link rel="stylesheet" href="../assets/css/aws-knowledge-map.css?v=1">
+<link rel="stylesheet" href="../assets/css/site-layout.css?v=2">
+<script src="../assets/js/aws-knowledge-map.js?v=1" defer></script>
+</head>
+<body id="top">
+<a class="skip" href="#study-sections">Skip to study sections</a>
+<header>
+<img class="site-logo" src="../assets/images/logo.png" alt="TPH dragon logo" width="96" height="96">
+<nav class="page-nav" aria-label="Main navigation"><a href="aws.html">← AWS resources</a><a href="aws-cloud-practitioner.html">Practice bank ↗</a></nav>
+<div class="eyebrow">AWS Certified Cloud Practitioner · CLF-C02</div>
+<h1>AWS knowledge map<span>From cloud foundations to architecture.</span></h1>
+<p class="intro">Follow the course in order, see how the concepts connect, and test what you remember. Open a topic for its study notes.</p>
+<div class="map-stats"><span><b>20</b> study sections</span><span><b>20</b> visual maps</span><span><b>v45</b> source slides</span></div>
+</header>
+<main>
+<div class="study-layout">
+<aside class="contents">
+<h2>Course sections</h2>
+<p>In the PDF’s teaching order</p>
+<nav aria-label="Course sections"><ol>
+<li><a href="#cloud"><span>01</span>What is cloud computing?</a></li>
+<li><a href="#iam"><span>02</span>Identity &amp; Access Management</a></li>
+<li><a href="#ec2"><span>03</span>Amazon EC2</a></li>
+<li><a href="#instance-storage"><span>04</span>EC2 instance storage</a></li>
+<li><a href="#scaling"><span>05</span>Elastic Load Balancing &amp; Auto Scaling</a></li>
+<li><a href="#s3"><span>06</span>Amazon S3</a></li>
+<li><a href="#databases"><span>07</span>Databases &amp; analytics</a></li>
+<li><a href="#compute"><span>08</span>Other compute services</a></li>
+<li><a href="#deployment"><span>09</span>Deploying &amp; managing infrastructure</a></li>
+<li><a href="#global"><span>10</span>Global infrastructure</a></li>
+<li><a href="#integration"><span>11</span>Cloud integration</a></li>
+<li><a href="#monitoring"><span>12</span>Cloud monitoring</a></li>
+<li><a href="#vpc"><span>13</span>Amazon VPC</a></li>
+<li><a href="#security"><span>14</span>Security &amp; compliance</a></li>
+<li><a href="#ml"><span>15</span>Machine learning</a></li>
+<li><a href="#billing"><span>16</span>Account management, billing &amp; support</a></li>
+<li><a href="#identity"><span>17</span>Advanced identity</a></li>
+<li><a href="#other"><span>18</span>Other AWS services</a></li>
+<li><a href="#architecture"><span>19</span>AWS architecting &amp; ecosystem</a></li>
+<li><a href="#exam"><span>20</span>Exam preparation</a></li>
+</ol></nav>
+<a class="back-top" href="#top">↑ Back to top</a>
+</aside>
+<div class="study-body">
+<section class="guide-intro" aria-labelledby="guide-title">
+<div><div class="eyebrow">Your learning route</div><h2 id="guide-title">Build the foundations. Connect the services.</h2>
+<p>Read the map, explore the notes, then answer the recall question before revealing the explanation.</p></div>
+<ol class="learning-route"><li><a href="#cloud">01–02 <b>Foundations & access</b></a></li><li><a href="#ec2">03–11 <b>Build & connect</b></a></li><li><a href="#monitoring">12–17 <b>Operate & protect</b></a></li><li><a href="#other">18–20 <b>Design & review</b></a></li></ol>
+<p class="source-note">Source: <cite>AWS Certified Cloud Practitioner Slides v45</cite>, Stéphane Maarek, 509 pages. These are condensed, rewritten study notes in the source’s section order; page numbers refer to the PDF. Course introductions (pp. 1–11) and closing remarks (pp. 508–509) sit outside the study sections. Product names follow the deck; check current AWS guidance for availability, limits, pricing, and exam logistics.</p>
+</section>
+<div class="study-controls" hidden>
+<div class="search-field"><label for="topic-search">Find a service or concept</label><input type="search" id="topic-search" placeholder="Try S3, encryption, migration…" autocomplete="off" aria-describedby="search-status"></div>
+<button type="button" id="clear-search">Clear</button><button type="button" id="expand-notes" aria-pressed="false">Expand all notes</button>
+<p id="search-status" role="status" aria-live="polite"></p>
+</div>
+<div id="study-sections">
+<section class="study-section" id="cloud" aria-labelledby="cloud-title">
+<div class="section-heading"><span class="section-number" aria-hidden="true">01</span><div><div class="section-meta">Section 01 · PDF pp. 12–40</div><h2 id="cloud-title">What is cloud computing?</h2><p>Understand the building blocks before choosing a service.</p></div><a class="section-top" href="#top" aria-label="Back to top from What is cloud computing?">↑</a></div>
+<figure class="concept-map"><ul class="map-nodes">
+<li><strong>Global infrastructure</strong><span>Regions around the world</span></li>
+<li><strong>Region</strong><span>A geographic deployment area</span></li>
+<li><strong>Availability Zones</strong><span>Separate failure boundaries</span></li>
+<li><strong>Resources</strong><span>Compute, storage, databases, networks</span></li>
+</ul><figcaption>Regions contain Availability Zones; edge locations bring content closer to users outside this hierarchy.</figcaption></figure>
+<div class="topic-grid">
+<details class="topic"><summary>IT foundations</summary><p>A client requests a service across a network. Servers combine CPU, RAM, storage, and software; IP addresses identify interfaces, routers connect networks, switches connect devices, and DNS resolves names.</p></details>
+<details class="topic"><summary>On-demand cloud</summary><p>Provision resources through a service provider and pay for measured usage. Self-service, network access, pooled resources, elasticity, and metering distinguish cloud computing from simply owning remote servers.</p></details>
+<details class="topic"><summary>Cloud economics</summary><p>Exchange large upfront hardware purchases (CapEx) for operating expenditure (OpEx). Economies of scale, demand-based capacity, faster experimentation, less data-center work, and global reach are the core benefits.</p></details>
+<details class="topic"><summary>Deployment models</summary><p>Public cloud uses a provider’s infrastructure; private cloud serves one organization; hybrid combines on-premises and cloud resources. Choose according to control, integration, and residency needs.</p></details>
+<details class="topic"><summary>Service models</summary><p>IaaS provides infrastructure such as EC2; you manage the operating system and application. PaaS, such as Elastic Beanstalk, manages more of the platform. SaaS provides a finished application. Responsibility shifts as management moves to the provider.</p></details>
+<details class="topic"><summary>Regions, AZs, and edge locations</summary><p>A Region contains isolated Availability Zones (each with one or more data centers). Choose Regions by residency requirements, customer proximity, service availability, and cost. Edge locations support delivery near users; they are not interchangeable with Regions.</p></details>
+<details class="topic"><summary>Global and regional scope</summary><p>IAM and Route 53 are examples of global services. EC2 and RDS deployments are regional. S3 buckets live in a Region even though the console presents a global view.</p></details>
+<details class="topic"><summary>Shared responsibility and acceptable use</summary><p>AWS protects the infrastructure of the cloud. Customers protect their data, identities, and service configuration in the cloud. The precise split depends on the service. The acceptable-use policy governs permitted use.</p></details>
+</div>
+<details class="recall"><summary><span>Check your understanding</span>Is elasticity the same as high availability?</summary><p>No. Elasticity adjusts capacity to demand; high availability keeps a workload accessible despite failures.</p></details>
+</section>
+<section class="study-section" id="iam" aria-labelledby="iam-title">
+<div class="section-heading"><span class="section-number" aria-hidden="true">02</span><div><div class="section-meta">Section 02 · PDF pp. 41–58</div><h2 id="iam-title">Identity &amp; Access Management</h2><p>Decide who can do what, on which resources.</p></div><a class="section-top" href="#top" aria-label="Back to top from Identity &amp; Access Management">↑</a></div>
+<figure class="concept-map"><ul class="map-nodes">
+<li><strong>Principal</strong><span>User or assumed role</span></li>
+<li><strong>Policy evaluation</strong><span>Actions + resources + conditions</span></li>
+<li><strong>Authorization</strong><span>Explicit deny overrides allow</span></li>
+<li><strong>AWS resource</strong><span>Only permitted requests succeed</span></li>
+</ul><figcaption>Policies define permissions. Groups organize users; roles provide temporary credentials to people or workloads.</figcaption></figure>
+<div class="topic-grid">
+<details class="topic"><summary>Users and groups</summary><p>An IAM user represents an identity in an account. Groups collect users with common permissions; groups do not contain other groups. Prefer federation and temporary credentials for routine access where possible.</p></details>
+<details class="topic"><summary>Policies and least privilege</summary><p>Policies describe allowed or denied actions on resources, optionally with conditions. Common fields include Effect, Action, Resource, and Condition; resource policies can name a Principal. Start with only the permissions the task needs.</p></details>
+<details class="topic"><summary>Permission evaluation</summary><p>Access starts implicitly denied. Applicable policies must permit it; explicit deny wins. Account guardrails and other policy types can further restrict access. A group policy is inherited by its members.</p></details>
+<details class="topic"><summary>Passwords and MFA</summary><p>Protect sign-in with a strong password policy and multi-factor authentication. MFA combines something you know with another factor such as an authenticator or hardware security key.</p></details>
+<details class="topic"><summary>Console, CLI, and SDK</summary><p>The console is a web interface; the CLI runs commands; SDKs let applications call AWS APIs. Programmatic credentials are sensitive. Do not embed or share access keys; use temporary credentials or workload roles.</p></details>
+<details class="topic"><summary>Roles for services</summary><p>An EC2 instance or Lambda function assumes a role to call other AWS services. Assign a role instead of storing a person’s access keys on the server.</p></details>
+<details class="topic"><summary>Audit access</summary><p>The IAM credentials report summarizes credential status across account users. Access Advisor shows service access information to help reduce unnecessary permissions.</p></details>
+<details class="topic"><summary>Root account and responsibility</summary><p>Protect root access with MFA and reserve it for tasks that require it. AWS operates IAM infrastructure; you manage identities, credentials, policies, and access reviews.</p></details>
+</div>
+<details class="recall"><summary><span>Check your understanding</span>How should an EC2 application access S3?</summary><p>Attach an IAM role with the necessary S3 permissions to the instance; avoid hard-coded access keys.</p></details>
+</section>
+<section class="study-section" id="ec2" aria-labelledby="ec2-title">
+<div class="section-heading"><span class="section-number" aria-hidden="true">03</span><div><div class="section-meta">Section 03 · PDF pp. 59–93</div><h2 id="ec2-title">Amazon EC2</h2><p>Choose a virtual machine and a purchasing model that fit the workload.</p></div><a class="section-top" href="#top" aria-label="Back to top from Amazon EC2">↑</a></div>
+<figure class="concept-map"><ul class="map-nodes">
+<li><strong>AMI</strong><span>Operating system + software</span></li>
+<li><strong>Instance type</strong><span>CPU, memory, networking</span></li>
+<li><strong>Storage + security</strong><span>Disks, role, security groups</span></li>
+<li><strong>User data</strong><span>Bootstrap the instance</span></li>
+</ul><figcaption>An EC2 launch combines these choices. You manage the guest operating system and application.</figcaption></figure>
+<div class="topic-grid">
+<details class="topic"><summary>Instance families</summary><p>General-purpose instances balance resources; compute-optimized instances suit CPU-heavy work; memory-optimized instances suit large working sets; storage-optimized instances suit intensive local I/O. Match the workload rather than buying the largest size.</p></details>
+<details class="topic"><summary>Launch configuration</summary><p>Choose an AMI, instance type, storage, network, security groups, and IAM role. User data can bootstrap software at first launch; scripts commonly run with elevated privileges.</p></details>
+<details class="topic"><summary>Security groups</summary><p>Stateful allow rules protect network interfaces. Return traffic for an allowed connection is permitted automatically. Reference CIDRs or other security groups; avoid opening administration ports to everyone.</p></details>
+<details class="topic"><summary>Connections and ports</summary><p>SSH commonly uses TCP 22, RDP 3389, HTTP 80, HTTPS 443, and FTP 21. EC2 Instance Connect supports managed SSH access. A connection timeout often suggests networking or firewall configuration; connection refusal may mean no service is listening.</p></details>
+<details class="topic"><summary>On-Demand</summary><p>Use without a long-term commitment for uncertain or short-lived demand. You pay for the resources you run according to the applicable billing model.</p></details>
+<details class="topic"><summary>Reserved Instances and Savings Plans</summary><p>Reserved Instances provide discounts tied to specified instance attributes; Standard and Convertible offer different flexibility. Savings Plans commit to an hourly spend for a term. Compute Savings Plans are broader than EC2 Instance Savings Plans.</p></details>
+<details class="topic"><summary>Spot</summary><p>Use spare capacity for interruptible work such as batch jobs or flexible processing. Design for interruption and retry; do not treat capacity as guaranteed.</p></details>
+<details class="topic"><summary>Dedicated Hosts and Dedicated Instances</summary><p>A Dedicated Host gives control over a physical server and can address host-bound licensing. Dedicated Instances isolate tenancy on hardware without the same placement and host visibility.</p></details>
+<details class="topic"><summary>Capacity Reservations</summary><p>Reserve capacity in a particular AZ. A capacity reservation alone is not a discount and can incur charges while unused; capacity assurance and billing discounts solve different problems.</p></details>
+<details class="topic"><summary>Shared responsibility</summary><p>AWS maintains facilities, physical hardware, and virtualization. You patch the guest OS, configure network access, secure application data, and maintain installed software.</p></details>
+</div>
+<details class="recall"><summary><span>Check your understanding</span>Which choice fits a batch job that can restart after interruption?</summary><p>Spot capacity, with checkpointing or retries. A critical uninterrupted workload needs a different capacity strategy.</p></details>
+</section>
+<section class="study-section" id="instance-storage" aria-labelledby="instance-storage-title">
+<div class="section-heading"><span class="section-number" aria-hidden="true">04</span><div><div class="section-meta">Section 04 · PDF pp. 94–113</div><h2 id="instance-storage-title">EC2 instance storage</h2><p>Separate block storage, shared files, and temporary local disks.</p></div><a class="section-top" href="#top" aria-label="Back to top from EC2 instance storage">↑</a></div>
+<figure class="concept-map"><ul class="map-nodes">
+<li><strong>Block · EBS</strong><span>Persistent volume within an AZ</span></li>
+<li><strong>Local · Instance store</strong><span>Fast scratch space; ephemeral</span></li>
+<li><strong>File · EFS</strong><span>Shared Linux/NFS files</span></li>
+<li><strong>File · FSx</strong><span>Managed specialized file systems</span></li>
+</ul><figcaption>These are alternative storage choices, not sequential processing stages.</figcaption></figure>
+<div class="topic-grid">
+<details class="topic"><summary>EBS volumes</summary><p>Network-attached block storage for EC2, scoped to an Availability Zone. Provision capacity and performance. Data can outlive an instance, but the delete-on-termination setting determines whether a volume is deleted with it.</p></details>
+<details class="topic"><summary>Snapshots and recovery</summary><p>EBS snapshots back up volumes and enable restoration or copying to another AZ or Region. Snapshot Archive targets infrequent recovery; Recycle Bin retention rules can protect against accidental deletion. Plan application-consistent backups.</p></details>
+<details class="topic"><summary>AMIs</summary><p>An Amazon Machine Image packages launch information such as an OS and installed software. Create a reusable image from a configured instance; AMIs are regional and can be copied. Public, private, and Marketplace images serve different needs.</p></details>
+<details class="topic"><summary>EC2 Image Builder</summary><p>Automate building, testing, and distributing machine or container images. Image maintenance is an ongoing process, not a one-time copy.</p></details>
+<details class="topic"><summary>Instance store</summary><p>Local hardware storage provides fast I/O for caches, buffers, and scratch data. Data can disappear on stop, termination, or host failure; it must not be the only copy of durable information.</p></details>
+<details class="topic"><summary>EFS and EFS-IA</summary><p>EFS provides shared NFS files for Linux clients, with regional deployments spanning AZs. Lifecycle policies move infrequently accessed files to lower-cost tiers. Shared files differ from an EBS disk attached to a machine.</p></details>
+<details class="topic"><summary>FSx</summary><p>FSx provides managed file systems. Windows File Server supports SMB and Active Directory integration; Lustre targets high-performance computing and integrates with S3. The slides also identify NetApp ONTAP as an FSx option.</p></details>
+<details class="topic"><summary>Storage responsibility</summary><p>AWS runs the storage infrastructure. You choose encryption, permissions, backup policies, retention, and the right durability model for your data.</p></details>
+</div>
+<details class="recall"><summary><span>Check your understanding</span>Many Linux servers need the same shared files. EBS or EFS?</summary><p>EFS is the shared-file choice. EBS is block storage scoped to an AZ; it is not a general shared NFS file system.</p></details>
+</section>
+<section class="study-section" id="scaling" aria-labelledby="scaling-title">
+<div class="section-heading"><span class="section-number" aria-hidden="true">05</span><div><div class="section-meta">Section 05 · PDF pp. 114–130</div><h2 id="scaling-title">Elastic Load Balancing &amp; Auto Scaling</h2><p>Spread traffic, replace failed instances, and match capacity to demand.</p></div><a class="section-top" href="#top" aria-label="Back to top from Elastic Load Balancing &amp; Auto Scaling">↑</a></div>
+<figure class="concept-map"><ul class="map-nodes">
+<li><strong>Clients</strong><span>Incoming requests</span></li>
+<li><strong>Load balancer</strong><span>Health checks + distribution</span></li>
+<li><strong>AZ A · AZ B</strong><span>Healthy application instances</span></li>
+<li><strong>Auto Scaling group</strong><span>Maintain and adjust capacity</span></li>
+</ul><figcaption>The load balancer distributes traffic across instances; the Auto Scaling group manages their capacity and health.</figcaption></figure>
+<div class="topic-grid">
+<details class="topic"><summary>Scale up or scale out</summary><p>Vertical scaling increases one machine’s size; horizontal scaling adds machines. Elasticity adjusts capacity as demand changes. Agility is the speed of provisioning and experimentation.</p></details>
+<details class="topic"><summary>High availability</summary><p>Distribute the workload across AZs so one failure boundary does not take down the entire service. Adding servers in a single AZ improves capacity but does not protect against losing that AZ.</p></details>
+<details class="topic"><summary>Elastic Load Balancing</summary><p>Provides a managed entry point, distributes requests, and checks target health. TLS termination and multi-AZ deployment reduce application and operations work.</p></details>
+<details class="topic"><summary>Load balancer types</summary><p>Application Load Balancer routes HTTP/HTTPS traffic at layer 7. Network Load Balancer handles transport-level TCP/UDP traffic. Gateway Load Balancer inserts network appliances. Classic Load Balancer appears in the slides as the older generation.</p></details>
+<details class="topic"><summary>Auto Scaling groups</summary><p>Set minimum, desired, and maximum capacity. An ASG launches or terminates instances and replaces unhealthy members; integration with a load balancer registers targets.</p></details>
+<details class="topic"><summary>Scaling strategies</summary><p>Manual changes set capacity directly. Step policies react to thresholds; target tracking maintains a metric target. Scheduled scaling handles known events; predictive scaling forecasts recurring demand.</p></details>
+</div>
+<details class="recall"><summary><span>Check your understanding</span>Does a load balancer itself add new EC2 instances?</summary><p>No. It distributes traffic. An Auto Scaling group adds, removes, and replaces instances.</p></details>
+</section>
+<section class="study-section" id="s3" aria-labelledby="s3-title">
+<div class="section-heading"><span class="section-number" aria-hidden="true">06</span><div><div class="section-meta">Section 06 · PDF pp. 131–162</div><h2 id="s3-title">Amazon S3</h2><p>Store objects and choose access, protection, and lifecycle policies.</p></div><a class="section-top" href="#top" aria-label="Back to top from Amazon S3">↑</a></div>
+<figure class="concept-map"><ul class="map-nodes">
+<li><strong>Frequent access</strong><span>Standard</span></li>
+<li><strong>Unknown access</strong><span>Intelligent-Tiering</span></li>
+<li><strong>Infrequent access</strong><span>Standard-IA / One Zone-IA</span></li>
+<li><strong>Archive</strong><span>Glacier retrieval options</span></li>
+</ul><figcaption>Choose by access frequency, retrieval urgency, resilience, and total cost. These are choices; lifecycle rules can move eligible objects between classes.</figcaption></figure>
+<div class="topic-grid">
+<details class="topic"><summary>Buckets and objects</summary><p>A bucket belongs to a Region. Objects have a key, content, metadata, optional tags, and optional version ID. Prefixes resemble folders but form part of the object key. Bucket naming rules depend on the bucket type and namespace.</p></details>
+<details class="topic"><summary>Uploads and uses</summary><p>S3 supports backups, media, data lakes, software distribution, and static content. Multipart uploads split large objects into parts. Object storage is different from a mounted block device or shared file system.</p></details>
+<details class="topic"><summary>Permissions</summary><p>IAM policies govern identities; bucket policies govern resource access, including cross-account access. Block Public Access helps prevent unintended exposure. ACLs are an older access-control mechanism; evaluate explicit denies and all applicable controls.</p></details>
+<details class="topic"><summary>Static websites</summary><p>S3 can serve static website content. Website endpoints have different access and HTTPS characteristics from the S3 REST endpoint; CloudFront can provide HTTPS delivery with an appropriately configured origin.</p></details>
+<details class="topic"><summary>Versioning and replication</summary><p>Versioning preserves object revisions and helps recover from accidental changes or deletes. SRR copies within a Region; CRR copies across Regions. Replication is asynchronous and requires versioning and appropriate permissions; existing objects need separate handling.</p></details>
+<details class="topic"><summary>Durability versus availability</summary><p>Durability is resistance to data loss; availability is the ability to access data when needed. One-Zone classes concentrate data in one AZ, so they carry a different failure risk from multi-AZ storage.</p></details>
+<details class="topic"><summary>Standard and IA</summary><p>Standard fits frequent reads. Standard-IA fits infrequent access with rapid retrieval. One Zone-IA fits recreatable or secondary data where a single-AZ risk is acceptable. Include retrieval and minimum-duration costs in comparisons.</p></details>
+<details class="topic"><summary>Glacier classes</summary><p>Instant Retrieval supports immediate access to rarely read data. Flexible Retrieval trades restore delay for archive economics. Deep Archive fits long retention and the longest restore tolerance. An archived object may require restoration before access.</p></details>
+<details class="topic"><summary>Intelligent-Tiering and lifecycle</summary><p>Intelligent-Tiering responds to changing access patterns. Lifecycle rules implement transitions or expiration based on configured conditions. Account for monitoring, request, transition, and retrieval costs instead of storage price alone.</p></details>
+<details class="topic"><summary>Express One Zone</summary><p>Designed for low-latency workloads using directory buckets in a single AZ. Co-locating compute and storage reduces latency; single-AZ placement is an explicit design choice.</p></details>
+<details class="topic"><summary>Encryption and access analysis</summary><p>Server-side encryption protects stored objects; client-side encryption happens before upload. IAM Access Analyzer identifies unintended sharing. Customers still control data access, retention, and configuration.</p></details>
+<details class="topic"><summary>Storage Gateway</summary><p>Connect on-premises storage workflows to AWS with file, volume, or tape gateway patterns. It bridges existing systems to cloud storage instead of requiring every application to use the S3 API directly.</p></details>
+</div>
+<details class="recall"><summary><span>Check your understanding</span>Is S3 replication the same as CloudFront caching?</summary><p>No. Replication creates copies in selected buckets. CloudFront caches responses near users for delivery.</p></details>
+</section>
+<section class="study-section" id="databases" aria-labelledby="databases-title">
+<div class="section-heading"><span class="section-number" aria-hidden="true">07</span><div><div class="section-meta">Section 07 · PDF pp. 163–193</div><h2 id="databases-title">Databases &amp; analytics</h2><p>Start with the data model and access pattern.</p></div><a class="section-top" href="#top" aria-label="Back to top from Databases &amp; analytics">↑</a></div>
+<figure class="concept-map"><ul class="map-nodes">
+<li><strong>Transactions</strong><span>RDS / Aurora</span></li>
+<li><strong>Key-value &amp; documents</strong><span>DynamoDB / DocumentDB</span></li>
+<li><strong>Analytics</strong><span>Redshift / Athena / EMR</span></li>
+<li><strong>Visualization</strong><span>QuickSight dashboards</span></li>
+</ul><figcaption>Database selection depends on how you write, query, relate, and analyze data.</figcaption></figure>
+<div class="topic-grid">
+<details class="topic"><summary>Relational and NoSQL</summary><p>Relational databases use structured tables and SQL relationships. NoSQL systems specialize in key-value, document, graph, or other access patterns with different schema and scaling tradeoffs. JSON is a data representation, not a database.</p></details>
+<details class="topic"><summary>RDS and Aurora</summary><p>RDS manages relational database operations such as backups and patching. Aurora is AWS’s MySQL/PostgreSQL-compatible database family; Aurora Serverless adjusts capacity to demand. Managed databases reduce host administration, but you still configure data access and protection.</p></details>
+<details class="topic"><summary>Replicas and failover</summary><p>Read replicas scale reads; a traditional Multi-AZ standby supports availability and failover. Cross-Region replicas can support disaster recovery and nearby reads. Deployment modes have different read and replication capabilities; do not treat every replica as equivalent.</p></details>
+<details class="topic"><summary>ElastiCache</summary><p>Managed in-memory caching reduces database load and accelerates repeated reads or session access. Cache invalidation and fallback behavior remain application concerns.</p></details>
+<details class="topic"><summary>DynamoDB and DAX</summary><p>DynamoDB is a managed serverless key-value/document database. Global Tables support multi-Region access. DAX is a cache specifically for DynamoDB, unlike a general-purpose ElastiCache deployment.</p></details>
+<details class="topic"><summary>Redshift</summary><p>A data warehouse for analytical SQL (OLAP), rather than a typical transactional database (OLTP). Column-oriented processing suits large aggregations; the slides cover provisioned and serverless operation.</p></details>
+<details class="topic"><summary>EMR</summary><p>Run big-data frameworks such as Spark and Hadoop for distributed processing. Choose it when the workload needs those processing ecosystems.</p></details>
+<details class="topic"><summary>Athena and QuickSight</summary><p>Athena queries S3 data using SQL without managing query servers. QuickSight turns datasets into business dashboards. Efficient formats, compression, and limited scans reduce analytical work.</p></details>
+<details class="topic"><summary>DocumentDB, Neptune, and Timestream</summary><p>DocumentDB supports MongoDB-compatible document workloads; Neptune models highly connected graphs; Timestream targets time-series data. Select by the access pattern rather than the familiar product name alone.</p></details>
+<details class="topic"><summary>Managed Blockchain</summary><p>Supports blockchain use cases involving shared transaction records and network participants. The slides introduce Hyperledger Fabric and Ethereum use cases.</p></details>
+<details class="topic"><summary>Glue</summary><p>A managed data integration and ETL service. The Data Catalog records dataset metadata that analytical services can use; ETL extracts, transforms, and loads data.</p></details>
+<details class="topic"><summary>Database Migration Service</summary><p>DMS migrates and replicates database data, including changes during migration. Same-engine and cross-engine migrations differ; schema conversion and application compatibility require planning.</p></details>
+</div>
+<details class="recall"><summary><span>Check your understanding</span>You need SQL queries over log files already stored in S3. Which service fits?</summary><p>Athena. Use QuickSight to visualize results; Redshift is the warehouse choice, and EMR runs big-data frameworks.</p></details>
+</section>
+<section class="study-section" id="compute" aria-labelledby="compute-title">
+<div class="section-heading"><span class="section-number" aria-hidden="true">08</span><div><div class="section-meta">Section 08 · PDF pp. 194–217</div><h2 id="compute-title">Other compute services</h2><p>Choose the right level of control for your application.</p></div><a class="section-top" href="#top" aria-label="Back to top from Other compute services">↑</a></div>
+<figure class="concept-map"><ul class="map-nodes">
+<li><strong>Virtual machine</strong><span>EC2 · manage the guest OS</span></li>
+<li><strong>Containers</strong><span>ECS or EKS · orchestrate apps</span></li>
+<li><strong>Container compute</strong><span>Fargate · no hosts to manage</span></li>
+<li><strong>Functions</strong><span>Lambda · run event-driven code</span></li>
+</ul><figcaption>These are compute models. ECS and EKS can use EC2 capacity or supported Fargate configurations.</figcaption></figure>
+<div class="topic-grid">
+<details class="topic"><summary>Containers and images</summary><p>Containers package application code and dependencies while sharing the host kernel. Virtual machines include a guest OS. Image architecture and OS compatibility still matter. Registries store images; they do not run the workload.</p></details>
+<details class="topic"><summary>ECS and ECR</summary><p>ECS schedules and manages containers. With EC2-backed capacity, you operate the hosts. ECR stores container images that workloads can pull.</p></details>
+<details class="topic"><summary>Fargate and EKS</summary><p>Fargate runs supported container workloads without managing EC2 hosts. EKS provides managed Kubernetes orchestration; Kubernetes and Fargate solve different layers of the stack.</p></details>
+<details class="topic"><summary>Serverless</summary><p>Servers still exist, but provisioning and maintaining them is handled by the provider. The concept extends beyond functions to services such as managed storage, messaging, and databases.</p></details>
+<details class="topic"><summary>Lambda</summary><p>Run short-lived, event-driven functions. Pay depends on invocation and allocated compute duration. The slides discuss supported runtimes, custom runtimes, compatible container images, and the execution time limit. Generic long-running containers fit a container service better.</p></details>
+<details class="topic"><summary>Event-driven examples</summary><p>An S3 upload can invoke a function to create a thumbnail and store metadata in DynamoDB. EventBridge can trigger scheduled work. Give the function an execution role with only required permissions.</p></details>
+<details class="topic"><summary>API Gateway</summary><p>Publish and manage HTTP/REST or WebSocket APIs, including authorization, throttling, and monitoring. A common serverless API connects API Gateway to Lambda and DynamoDB.</p></details>
+<details class="topic"><summary>Batch</summary><p>Queue and schedule finite computing jobs on appropriate capacity. Useful for processing that exceeds a short function’s constraints; package the workload and let Batch coordinate execution.</p></details>
+<details class="topic"><summary>Lightsail</summary><p>Simplified infrastructure bundles for small websites, applications, and development environments. It reduces setup choices compared with assembling a full EC2-based architecture.</p></details>
+</div>
+<details class="recall"><summary><span>Check your understanding</span>Which service stores images, and which runs containers without managing hosts?</summary><p>ECR stores images. Fargate supplies managed container compute; ECS or EKS handles orchestration.</p></details>
+</section>
+<section class="study-section" id="deployment" aria-labelledby="deployment-title">
+<div class="section-heading"><span class="section-number" aria-hidden="true">09</span><div><div class="section-meta">Section 09 · PDF pp. 218–241</div><h2 id="deployment-title">Deploying &amp; managing infrastructure</h2><p>Make infrastructure and releases repeatable.</p></div><a class="section-top" href="#top" aria-label="Back to top from Deploying &amp; managing infrastructure">↑</a></div>
+<figure class="concept-map"><ul class="map-nodes">
+<li><strong>Source</strong><span>Git / CodeCommit</span></li>
+<li><strong>Build &amp; test</strong><span>CodeBuild + CodeArtifact</span></li>
+<li><strong>Deploy</strong><span>CodeDeploy / CloudFormation</span></li>
+<li><strong>Coordinate</strong><span>CodePipeline across the stages</span></li>
+</ul><figcaption>CodePipeline orchestrates release stages. CloudFormation provisions resources; CodeDeploy delivers application revisions.</figcaption></figure>
+<div class="topic-grid">
+<details class="topic"><summary>CloudFormation</summary><p>Declare infrastructure in templates, then manage it as a stack. Repeatable definitions, dependency handling, reviewable changes, and consistent environments reduce manual configuration drift.</p></details>
+<details class="topic"><summary>CDK and Infrastructure Composer</summary><p>CDK expresses infrastructure with programming languages and synthesizes CloudFormation templates. Infrastructure Composer visually assembles and inspects infrastructure definitions.</p></details>
+<details class="topic"><summary>Three-tier application</summary><p>A load balancer fronts application instances, which use a database and possibly a cache. Place redundant components across AZs and give each tier only its required network access.</p></details>
+<details class="topic"><summary>Elastic Beanstalk</summary><p>Deploy application code onto a managed application platform that configures resources such as EC2, load balancing, and scaling. You retain configuration choices and pay for the underlying resources. Single-instance, web, and worker patterns serve different needs.</p></details>
+<details class="topic"><summary>CodeCommit</summary><p>The source-control service presented in the slides: private Git repositories with version history and collaboration. It occupies the source stage of a pipeline.</p></details>
+<details class="topic"><summary>CodeBuild and CodeArtifact</summary><p>CodeBuild compiles and tests code, producing build outputs. CodeArtifact stores software packages and dependencies used by tools such as npm, pip, and Maven.</p></details>
+<details class="topic"><summary>CodeDeploy and CodePipeline</summary><p>CodeDeploy automates application rollouts to supported targets, including servers. CodePipeline connects source, build, test, and deploy stages; it is the coordinator rather than the compiler.</p></details>
+<details class="topic"><summary>Systems Manager</summary><p>Manage fleets of AWS and on-premises machines with commands, inventory, patching, and automation. Managed-node access depends on agent setup, IAM permissions, and connectivity.</p></details>
+<details class="topic"><summary>Session Manager and Parameter Store</summary><p>Session Manager provides controlled shell access without opening inbound SSH. Parameter Store holds versioned configuration and encrypted values with IAM access control. Configure session logging and secret access deliberately.</p></details>
+</div>
+<details class="recall"><summary><span>Check your understanding</span>How do CDK and CloudFormation relate?</summary><p>CDK code synthesizes a CloudFormation template; CloudFormation then provisions and manages the resources.</p></details>
+</section>
+<section class="study-section" id="global" aria-labelledby="global-title">
+<div class="section-heading"><span class="section-number" aria-hidden="true">10</span><div><div class="section-meta">Section 10 · PDF pp. 242–267</div><h2 id="global-title">Global infrastructure</h2><p>Route users to nearby, healthy applications.</p></div><a class="section-top" href="#top" aria-label="Back to top from Global infrastructure">↑</a></div>
+<figure class="concept-map"><ul class="map-nodes">
+<li><strong>User</strong><span>Requests a hostname</span></li>
+<li><strong>Route 53</strong><span>Resolves DNS</span></li>
+<li><strong>CloudFront edge</strong><span>Serves cacheable responses</span></li>
+<li><strong>Origin</strong><span>S3 or an application backend</span></li>
+</ul><figcaption>DNS selects the endpoint; CloudFront serves cached content or forwards to the origin. Global Accelerator is a separate network-routing option.</figcaption></figure>
+<div class="topic-grid">
+<details class="topic"><summary>Reasons to go global</summary><p>Reduce user latency, provide recovery options across Regions, and avoid concentrating all capacity in one location. Multi-Region operation adds data consistency, cost, and operations complexity.</p></details>
+<details class="topic"><summary>Route 53 records</summary><p>DNS maps names to destinations. A resolves IPv4, AAAA resolves IPv6, CNAME points to another hostname, and alias records target supported AWS resources.</p></details>
+<details class="topic"><summary>Routing policies</summary><p>Simple routing gives a basic answer; weighted routing splits traffic by weights; latency routing selects a suitable Region; failover routing uses health checks and a standby. Routing is not the same as copying application data.</p></details>
+<details class="topic"><summary>CloudFront</summary><p>A CDN caches responses at edge locations. Origins can include S3 and application endpoints. Origin Access Control can protect an S3 origin; a website endpoint behaves differently from an S3 REST origin.</p></details>
+<details class="topic"><summary>Caching versus replication</summary><p>CloudFront caches according to cache policy and freshness settings. S3 cross-Region replication creates copies in configured destination buckets. Choose based on delivery versus durable replication needs.</p></details>
+<details class="topic"><summary>S3 Transfer Acceleration</summary><p>Uses edge entry points and the AWS network to accelerate eligible long-distance S3 transfers. It changes the transfer path, not the bucket’s Region.</p></details>
+<details class="topic"><summary>Global Accelerator</summary><p>Routes traffic over the AWS global network to regional application endpoints using static anycast IPs. It does not cache content; it suits network performance and endpoint failover requirements.</p></details>
+<details class="topic"><summary>Outposts, Wavelength, and Local Zones</summary><p>Outposts extends AWS infrastructure into your premises; you handle local physical security. Wavelength places compute near carrier networks. Local Zones place selected AWS resources near population centers outside a Region’s main AZ footprint.</p></details>
+<details class="topic"><summary>Availability patterns</summary><p>Single-AZ is the simplest but most concentrated. Multi-AZ improves regional resilience. Multi-Region active-passive provides a recovery environment; active-active serves from multiple Regions and needs careful state management.</p></details>
+</div>
+<details class="recall"><summary><span>Check your understanding</span>Global Accelerator or CloudFront for cached images at the edge?</summary><p>CloudFront. Global Accelerator improves the network path to applications without caching responses.</p></details>
+</section>
+<section class="study-section" id="integration" aria-labelledby="integration-title">
+<div class="section-heading"><span class="section-number" aria-hidden="true">11</span><div><div class="section-meta">Section 11 · PDF pp. 268–280</div><h2 id="integration-title">Cloud integration</h2><p>Decouple producers and consumers so each can scale independently.</p></div><a class="section-top" href="#top" aria-label="Back to top from Cloud integration">↑</a></div>
+<figure class="concept-map"><ul class="map-nodes">
+<li><strong>Producer</strong><span>Creates an event</span></li>
+<li><strong>SNS topic</strong><span>Fans out notifications</span></li>
+<li><strong>SQS queues</strong><span>Buffer each subscriber’s work</span></li>
+<li><strong>Consumers</strong><span>Process and acknowledge</span></li>
+</ul><figcaption>Fan-out combines SNS with separate SQS queues. For replayable streams, consider Kinesis rather than a work queue.</figcaption></figure>
+<div class="topic-grid">
+<details class="topic"><summary>Synchronous versus asynchronous</summary><p>A synchronous caller waits for a response. Asynchronous messaging buffers work, handles bursts, and reduces direct dependencies. Design for retries, failures, and duplicate processing.</p></details>
+<details class="topic"><summary>SQS Standard</summary><p>A managed queue distributes work among consumers. Messages are retained until deletion or expiry; consumers delete successfully processed messages. At-least-once delivery means handlers should tolerate duplicates.</p></details>
+<details class="topic"><summary>SQS FIFO</summary><p>Use ordered message groups and deduplication when ordering matters. FIFO does not remove the need for application-level error handling and safe retries.</p></details>
+<details class="topic"><summary>SNS</summary><p>Publish to a topic and deliver to subscribers such as queues, functions, HTTP endpoints, or notification channels. Fan-out sends an event to multiple interested consumers rather than sharing a queue’s work.</p></details>
+<details class="topic"><summary>Kinesis Data Streams and Data Firehose</summary><p>Kinesis ingests streaming records for real-time consumers and analysis. Data Firehose delivers streaming data to destinations such as S3 and analytical services.</p></details>
+<details class="topic"><summary>Amazon MQ</summary><p>Managed ActiveMQ or RabbitMQ brokers support existing messaging protocols and applications. It fits broker-compatible migrations, whereas SQS and SNS are cloud-native queue and pub/sub choices.</p></details>
+</div>
+<details class="recall"><summary><span>Check your understanding</span>A single order must notify billing and shipping independently. What pattern fits?</summary><p>Publish to SNS and subscribe separate SQS queues, so billing and shipping each receive and buffer their own work.</p></details>
+</section>
+<section class="study-section" id="monitoring" aria-labelledby="monitoring-title">
+<div class="section-heading"><span class="section-number" aria-hidden="true">12</span><div><div class="section-meta">Section 12 · PDF pp. 281–299</div><h2 id="monitoring-title">Cloud monitoring</h2><p>Distinguish measurements, audit history, traces, and service health.</p></div><a class="section-top" href="#top" aria-label="Back to top from Cloud monitoring">↑</a></div>
+<figure class="concept-map"><ul class="map-nodes">
+<li><strong>Metrics &amp; logs</strong><span>CloudWatch · what is happening?</span></li>
+<li><strong>API activity</strong><span>CloudTrail · who did what?</span></li>
+<li><strong>Request traces</strong><span>X-Ray · where is the delay?</span></li>
+<li><strong>AWS events</strong><span>Health · what affects resources?</span></li>
+</ul><figcaption>Each tool answers a different operational question; combine them when investigating incidents.</figcaption></figure>
+<div class="topic-grid">
+<details class="topic"><summary>CloudWatch metrics</summary><p>Time-series measurements describe resource behavior. Dashboards visualize them; custom metrics cover application-specific signals. EC2 memory and guest OS logs require appropriate collection rather than relying on default instance metrics.</p></details>
+<details class="topic"><summary>Alarms</summary><p>Evaluate metrics and move between OK, ALARM, and INSUFFICIENT_DATA. Actions can notify SNS, invoke supported EC2 operations, or drive scaling. Missing data is not necessarily a healthy system.</p></details>
+<details class="topic"><summary>Logs and agents</summary><p>Collect application and system logs, configure retention, and grant permissions. An agent on EC2 or on-premises hosts can send logs and additional metrics.</p></details>
+<details class="topic"><summary>EventBridge</summary><p>Route service, application, or partner events to targets using rules. Scheduled events trigger periodic work. Event buses, schemas, archive, and replay support event-driven integration.</p></details>
+<details class="topic"><summary>CloudTrail</summary><p>Audit account activity and API calls from console, CLI, SDKs, and services. Use it to investigate who changed or deleted a resource. Configure the needed event types and durable trail storage; default event history is not a complete permanent audit archive.</p></details>
+<details class="topic"><summary>X-Ray</summary><p>Trace a request across distributed components to identify dependencies, errors, and latency bottlenecks. Instrumentation provides context beyond separate log lines.</p></details>
+<details class="topic"><summary>AWS Health</summary><p>The public service view reports broad AWS service events; the account view highlights events relevant to your resources, including planned changes and remediation guidance.</p></details>
+</div>
+<details class="recall"><summary><span>Check your understanding</span>An administrator deleted a resource. Which tool should you inspect first?</summary><p>CloudTrail for the API event and identity. CloudWatch measures operational behavior; X-Ray traces application requests.</p></details>
+</section>
+<section class="study-section" id="vpc" aria-labelledby="vpc-title">
+<div class="section-heading"><span class="section-number" aria-hidden="true">13</span><div><div class="section-meta">Section 13 · PDF pp. 300–318</div><h2 id="vpc-title">Amazon VPC</h2><p>Control network boundaries and traffic paths.</p></div><a class="section-top" href="#top" aria-label="Back to top from Amazon VPC">↑</a></div>
+<figure class="concept-map"><ul class="map-nodes">
+<li><strong>Region · VPC</strong><span>Private address space</span></li>
+<li><strong>AZ · public subnet</strong><span>Route to an internet gateway</span></li>
+<li><strong>AZ · private subnet</strong><span>Application and data tiers</span></li>
+<li><strong>Private access</strong><span>Endpoints; NAT for outbound internet</span></li>
+</ul><figcaption>A subnet is public because of its route to an internet gateway. A resource also needs suitable addressing and security rules to be internet reachable.</figcaption></figure>
+<div class="topic-grid">
+<details class="topic"><summary>Addresses and scope</summary><p>A VPC is regional; each subnet belongs to one AZ. CIDR blocks define address ranges. Public IPv4 reaches the internet, private addresses serve private networks, and an Elastic IP provides a persistent public IPv4 allocation.</p></details>
+<details class="topic"><summary>Routes and internet access</summary><p>Route tables select destinations and next hops. An internet gateway connects a VPC to the internet. A public route alone does not make every instance reachable; addresses and security controls also matter.</p></details>
+<details class="topic"><summary>NAT</summary><p>A public NAT gateway allows private-subnet workloads to initiate outbound IPv4 internet connections without accepting unsolicited inbound connections. It needs an appropriate public-subnet route; a NAT instance is the self-managed alternative.</p></details>
+<details class="topic"><summary>Security groups versus NACLs</summary><p>Security groups are stateful allow controls on interfaces. Network ACLs are stateless subnet controls with allow and deny rules; return traffic must be allowed explicitly. Rules and association scope are frequent comparison points.</p></details>
+<details class="topic"><summary>Flow Logs</summary><p>Record IP traffic metadata for interfaces, subnets, or VPCs. Useful for investigating accepted or rejected traffic; flow logs are not packet-content captures.</p></details>
+<details class="topic"><summary>Peering</summary><p>Connect two VPCs using private networking and non-overlapping address ranges. Peering is non-transitive: A-to-B and B-to-C do not automatically provide A-to-C connectivity.</p></details>
+<details class="topic"><summary>Endpoints and PrivateLink</summary><p>VPC endpoints reach supported services privately. Gateway endpoints support S3 and DynamoDB; interface endpoints use private interfaces and PrivateLink. PrivateLink can expose a service without connecting entire networks.</p></details>
+<details class="topic"><summary>VPN connections</summary><p>Site-to-Site VPN connects a remote network through encrypted tunnels over the internet. A customer gateway represents the on-premises side. Client VPN provides user-device access to private networks.</p></details>
+<details class="topic"><summary>Direct Connect</summary><p>A dedicated network connection to AWS gives a private connectivity path. Private does not automatically mean encrypted; evaluate encryption separately.</p></details>
+<details class="topic"><summary>Transit Gateway</summary><p>A central hub connects VPCs and on-premises networks, simplifying large topologies and supporting transitive routing when configured.</p></details>
+</div>
+<details class="recall"><summary><span>Check your understanding</span>Does VPC peering through an intermediate VPC automatically provide transit?</summary><p>No. Peering is non-transitive. Use explicit connections or a routing hub such as Transit Gateway.</p></details>
+</section>
+<section class="study-section" id="security" aria-labelledby="security-title">
+<div class="section-heading"><span class="section-number" aria-hidden="true">14</span><div><div class="section-meta">Section 14 · PDF pp. 319–355</div><h2 id="security-title">Security &amp; compliance</h2><p>Protect, detect, investigate, and demonstrate compliance.</p></div><a class="section-top" href="#top" aria-label="Back to top from Security &amp; compliance">↑</a></div>
+<figure class="concept-map"><ul class="map-nodes">
+<li><strong>Protect</strong><span>IAM · WAF · Shield · KMS</span></li>
+<li><strong>Detect</strong><span>GuardDuty · Inspector · Macie</span></li>
+<li><strong>Investigate</strong><span>Security Hub · Detective</span></li>
+<li><strong>Assess</strong><span>Config · Artifact</span></li>
+</ul><figcaption>This is a map of security roles, not a mandatory data pipeline. Each service addresses a different risk or evidence need.</figcaption></figure>
+<div class="topic-grid">
+<details class="topic"><summary>Shared responsibility in practice</summary><p>For EC2, customers patch the guest OS; with RDS, AWS handles the underlying host. Customers still control identities, database permissions, network access, and data protection. In S3, bucket policies and data configuration remain customer responsibilities.</p></details>
+<details class="topic"><summary>Shield and WAF</summary><p>Shield addresses distributed denial-of-service attacks. WAF filters HTTP requests using web ACL rules, such as IP, rate, or request-content conditions. These complement network access controls rather than replacing them.</p></details>
+<details class="topic"><summary>Network Firewall and Firewall Manager</summary><p>Network Firewall inspects traffic through configured VPC paths. Firewall Manager centrally applies supported security policies across an organization’s accounts and resources.</p></details>
+<details class="topic"><summary>Encryption states</summary><p>At-rest encryption protects stored data; in-transit encryption protects network transfers. TLS and key management address different pieces of the protection model.</p></details>
+<details class="topic"><summary>KMS and CloudHSM</summary><p>KMS manages keys and cryptographic operations with AWS integrations. Distinguish customer-managed, AWS-managed, and AWS-owned keys. CloudHSM supplies dedicated hardware security modules with more customer control over key management.</p></details>
+<details class="topic"><summary>ACM and Secrets Manager</summary><p>Certificate Manager provisions and manages TLS certificates for supported uses. Secrets Manager stores secrets and supports rotation workflows; Parameter Store is also used for configuration and encrypted parameters.</p></details>
+<details class="topic"><summary>Artifact</summary><p>Access AWS compliance reports and agreements. An AWS certification or report does not automatically make your workload compliant; configuration and business processes still matter.</p></details>
+<details class="topic"><summary>GuardDuty</summary><p>Detect suspicious activity from supported AWS telemetry, such as API, network, and DNS signals. Findings can trigger investigation or automated response.</p></details>
+<details class="topic"><summary>Inspector and Macie</summary><p>Inspector assesses supported compute and software workloads for vulnerabilities and exposure. Macie discovers sensitive data in S3. Threat detection, vulnerability assessment, and sensitive-data discovery are separate tasks.</p></details>
+<details class="topic"><summary>Config</summary><p>Record resource configuration and changes; evaluate compliance against rules. It answers how a resource was configured and whether it meets a rule, rather than simply identifying who called an API.</p></details>
+<details class="topic"><summary>Security Hub and Detective</summary><p>Security Hub aggregates security findings and posture information. Detective supports investigation of related activity to understand potential incidents.</p></details>
+<details class="topic"><summary>Access Analyzer and root tasks</summary><p>Access Analyzer helps identify unintended access. Protect root credentials and restrict root usage to required tasks; use scoped identities for daily operations.</p></details>
+<details class="topic"><summary>Testing and abuse reporting</summary><p>Security tests must follow AWS’s applicable testing policy and scope. The slides distinguish permitted assessments from prohibited disruptive activity and discuss reporting abuse. Check the policy before conducting a real test.</p></details>
+</div>
+<details class="recall"><summary><span>Check your understanding</span>Which service finds sensitive data in S3: Inspector, GuardDuty, or Macie?</summary><p>Macie. Inspector looks for vulnerabilities; GuardDuty looks for suspicious activity and threats.</p></details>
+</section>
+<section class="study-section" id="ml" aria-labelledby="ml-title">
+<div class="section-heading"><span class="section-number" aria-hidden="true">15</span><div><div class="section-meta">Section 15 · PDF pp. 356–367</div><h2 id="ml-title">Machine learning</h2><p>Match the input and desired output to the service.</p></div><a class="section-top" href="#top" aria-label="Back to top from Machine learning">↑</a></div>
+<figure class="concept-map"><ul class="map-nodes">
+<li><strong>Speech → text</strong><span>Transcribe</span></li>
+<li><strong>Text → speech</strong><span>Polly</span></li>
+<li><strong>Text → meaning</strong><span>Comprehend</span></li>
+<li><strong>Documents → fields</strong><span>Textract</span></li>
+</ul><figcaption>Direction matters: transcription, speech synthesis, language analysis, and document extraction are different tasks.</figcaption></figure>
+<div class="topic-grid">
+<details class="topic"><summary>Rekognition</summary><p>Analyze images and video for objects, scenes, and supported visual recognition tasks. Choose it for visual content rather than document-table extraction.</p></details>
+<details class="topic"><summary>Transcribe and Polly</summary><p>Transcribe converts speech into text, such as captions. Polly converts written text into synthesized speech.</p></details>
+<details class="topic"><summary>Translate and Comprehend</summary><p>Translate converts between languages. Comprehend extracts language insights, such as entities, sentiment, and key phrases.</p></details>
+<details class="topic"><summary>Lex and Connect</summary><p>Lex builds conversational interfaces with speech and text. Connect provides a cloud contact center; bots and contact-center workflows can work together.</p></details>
+<details class="topic"><summary>SageMaker AI</summary><p>Tools for preparing data and building, training, and deploying machine-learning models. Use it when creating a model workflow instead of simply calling a prebuilt AI feature.</p></details>
+<details class="topic"><summary>Kendra</summary><p>Enterprise search using machine learning to retrieve relevant information from documents and other sources.</p></details>
+<details class="topic"><summary>Personalize</summary><p>Build recommendations based on user and item interactions, such as suggested media or products.</p></details>
+<details class="topic"><summary>Textract</summary><p>Extract printed text, handwriting, forms, and tables from documents. It goes beyond simply labeling an image.</p></details>
+</div>
+<details class="recall"><summary><span>Check your understanding</span>You need fields and tables from scanned invoices. Which service fits?</summary><p>Textract. Transcribe processes speech; Rekognition analyzes visual content.</p></details>
+</section>
+<section class="study-section" id="billing" aria-labelledby="billing-title">
+<div class="section-heading"><span class="section-number" aria-hidden="true">16</span><div><div class="section-meta">Section 16 · PDF pp. 368–416</div><h2 id="billing-title">Account management, billing &amp; support</h2><p>Organize accounts, attribute costs, and choose the right cost tool.</p></div><a class="section-top" href="#top" aria-label="Back to top from Account management, billing &amp; support">↑</a></div>
+<figure class="concept-map"><ul class="map-nodes">
+<li><strong>Estimate</strong><span>Pricing Calculator</span></li>
+<li><strong>Attribute &amp; analyze</strong><span>Tags · reports · Cost Explorer</span></li>
+<li><strong>Monitor</strong><span>Budgets · anomaly detection</span></li>
+<li><strong>Optimize</strong><span>Compute Optimizer · commitments</span></li>
+</ul><figcaption>Cost management is a cycle: estimate, measure, detect deviations, then adjust resources and commitments.</figcaption></figure>
+<div class="topic-grid">
+<details class="topic"><summary>Organizations and OUs</summary><p>Manage multiple accounts with a management account and organizational units. Separate environments, teams, security boundaries, and logs where appropriate. Consolidated billing combines eligible usage and discounts.</p></details>
+<details class="topic"><summary>Service control policies</summary><p>SCPs set permission boundaries for member accounts; they do not grant permissions. IAM must still allow the action. The management account and service-linked roles have special treatment.</p></details>
+<details class="topic"><summary>Control Tower</summary><p>Sets up and governs a multi-account environment using established controls and Organizations. It helps standardize account provisioning and ongoing oversight.</p></details>
+<details class="topic"><summary>RAM and Service Catalog</summary><p>Resource Access Manager shares supported resources across accounts. Service Catalog publishes approved products for self-service deployment. Sharing a resource and approving a deployment template solve different problems.</p></details>
+<details class="topic"><summary>Pricing dimensions</summary><p>Compute configuration and duration, provisioned storage and performance, requests, retrieval, transfer, and deployment topology affect cost. A cheap storage rate does not guarantee the cheapest total workload.</p></details>
+<details class="topic"><summary>Commitments and discounts</summary><p>On-demand usage preserves flexibility; reservations and Savings Plans exchange commitment for discounts; volume pricing rewards eligible usage. EC2 Instance, Compute, and machine-learning savings options differ in scope.</p></details>
+<details class="topic"><summary>Free offers and support plans</summary><p>The deck describes Free/Paid account plans and Basic, Business Support+, Enterprise, and Unified Operations support. Offers, eligibility, response commitments, and prices change; verify them before buying. A Technical Account Manager is a named support role, not an IAM identity feature.</p></details>
+<details class="topic"><summary>Pricing Calculator and Billing Dashboard</summary><p>Calculator estimates a planned architecture. The billing dashboard summarizes incurred charges and account billing information.</p></details>
+<details class="topic"><summary>Tags and cost reports</summary><p>Activate suitable cost-allocation tags to attribute costs. Cost and Usage Reports provide detailed line items for analysis. Resource Groups organize resources using shared criteria such as tags.</p></details>
+<details class="topic"><summary>Cost Explorer</summary><p>Explore historical spend, compare usage patterns, forecast costs, and examine commitment opportunities. It analyzes usage already recorded, rather than only estimating a hypothetical design.</p></details>
+<details class="topic"><summary>Budgets and billing alarms</summary><p>Budgets track actual or forecast spending and other targets with notifications or configured actions. CloudWatch billing alarms monitor estimated charges through the billing metric in us-east-1. An alert alone does not cap spending.</p></details>
+<details class="topic"><summary>Anomaly detection and quotas</summary><p>Cost Anomaly Detection identifies unusual spending patterns. Service Quotas tracks limits and supports increase requests; quota alarms are about capacity limits, not budget enforcement.</p></details>
+<details class="topic"><summary>Compute Optimizer and Trusted Advisor</summary><p>Compute Optimizer uses utilization data for sizing suggestions. Trusted Advisor checks broader account practices such as security, resilience, cost, performance, service limits, and operations. Review recommendations in workload context.</p></details>
+<details class="topic"><summary>Account hygiene</summary><p>Centralize audit logs, use MFA and least privilege, tag consistently, monitor configuration, and select support suited to the workload. Keep credentials and recovery processes under review.</p></details>
+</div>
+<details class="recall"><summary><span>Check your understanding</span>Estimate a future design, explore past spend, or alert on a forecast overrun?</summary><p>Use Pricing Calculator, Cost Explorer, and AWS Budgets respectively. They answer three different cost questions.</p></details>
+</section>
+<section class="study-section" id="identity" aria-labelledby="identity-title">
+<div class="section-heading"><span class="section-number" aria-hidden="true">17</span><div><div class="section-meta">Section 17 · PDF pp. 417–424</div><h2 id="identity-title">Advanced identity</h2><p>Separate workforce access, application users, and temporary credentials.</p></div><a class="section-top" href="#top" aria-label="Back to top from Advanced identity">↑</a></div>
+<figure class="concept-map"><ul class="map-nodes">
+<li><strong>Workforce sign-in</strong><span>IAM Identity Center</span></li>
+<li><strong>Customer sign-in</strong><span>Cognito</span></li>
+<li><strong>Temporary AWS access</strong><span>STS + IAM roles</span></li>
+<li><strong>Directory integration</strong><span>Directory Service</span></li>
+</ul><figcaption>Choose the identity service for the audience and credential lifecycle, not merely because it supports login.</figcaption></figure>
+<div class="topic-grid">
+<details class="topic"><summary>STS</summary><p>Security Token Service issues temporary, limited-duration AWS credentials. Role assumption supports service access, federation, and cross-account workflows without distributing long-lived keys.</p></details>
+<details class="topic"><summary>Cognito</summary><p>Provide sign-up and sign-in for web and mobile application users, including federation with supported identity providers. These customers do not each need an IAM user.</p></details>
+<details class="topic"><summary>Active Directory</summary><p>A directory centralizes users, computers, groups, and related organizational objects. It can underpin authentication and access management for existing enterprise workloads.</p></details>
+<details class="topic"><summary>Directory Service options</summary><p>Managed Microsoft AD hosts a managed directory and can establish trusts. AD Connector proxies authentication to an existing directory. Simple AD supplies a smaller AD-compatible directory with different capabilities.</p></details>
+<details class="topic"><summary>IAM Identity Center</summary><p>Centralize workforce single sign-on across AWS accounts and business applications. Connect an identity source, then assign access to appropriate users and groups.</p></details>
+<details class="topic"><summary>Compare scope</summary><p>IAM controls AWS permissions, Organizations manages accounts, STS issues temporary credentials, Cognito serves app users, and Identity Center centralizes workforce sign-in.</p></details>
+</div>
+<details class="recall"><summary><span>Check your understanding</span>Employees need one sign-in across several AWS accounts. Which service fits?</summary><p>IAM Identity Center. Cognito is primarily for users of your web or mobile application.</p></details>
+</section>
+<section class="study-section" id="other" aria-labelledby="other-title">
+<div class="section-heading"><span class="section-number" aria-hidden="true">18</span><div><div class="section-meta">Section 18 · PDF pp. 425–454</div><h2 id="other-title">Other AWS services</h2><p>Recognize specialist services, migration choices, and recovery strategies.</p></div><a class="section-top" href="#top" aria-label="Back to top from Other AWS services">↑</a></div>
+<figure class="concept-map"><ul class="map-nodes">
+<li><strong>Backup &amp; restore</strong><span>Rebuild from saved copies</span></li>
+<li><strong>Pilot light</strong><span>Keep core components ready</span></li>
+<li><strong>Warm standby</strong><span>Run a smaller complete environment</span></li>
+<li><strong>Multi-site</strong><span>Maintain a fully active environment</span></li>
+</ul><figcaption>Moving right generally reduces recovery time while increasing running cost and operational complexity.</figcaption></figure>
+<div class="topic-grid">
+<details class="topic"><summary>WorkSpaces and AppStream 2.0</summary><p>WorkSpaces provides managed virtual desktops. AppStream 2.0, as named in the slides, streams applications to users. A full desktop and an individual streamed application are different experiences.</p></details>
+<details class="topic"><summary>IoT Core</summary><p>Connect devices, exchange messages, and route device data into cloud services. Device identities and message permissions are part of the security model.</p></details>
+<details class="topic"><summary>AppSync and Amplify</summary><p>AppSync supports application APIs and real-time data interactions, including GraphQL. Amplify supplies tools and services for building and deploying web/mobile applications with connected backends.</p></details>
+<details class="topic"><summary>Infrastructure Composer and Device Farm</summary><p>Composer visually creates infrastructure definitions. Device Farm tests applications on browsers and real mobile devices, producing artifacts such as logs and screenshots.</p></details>
+<details class="topic"><summary>AWS Backup</summary><p>Centralize backup plans, schedules, retention, and supported cross-account or cross-Region protection. Verify recovery, not only that a backup job ran.</p></details>
+<details class="topic"><summary>Recovery strategies</summary><p>Backup/restore rebuilds after an event. Pilot light keeps core capability running. Warm standby maintains a smaller functional environment. Multi-site keeps active capacity in more than one location. Recovery targets guide the tradeoff.</p></details>
+<details class="topic"><summary>Elastic Disaster Recovery</summary><p>Replicates server data into a staging environment and supports recovery into AWS. It is for disaster recovery; Application Migration Service targets migration cutover.</p></details>
+<details class="topic"><summary>The 7 Rs · retain, retire, relocate</summary><p>Retain what should stay in place; retire what is no longer needed; relocate a workload environment with minimal application changes. Migration is not always the correct choice.</p></details>
+<details class="topic"><summary>The 7 Rs · rehost, replatform, repurchase, refactor</summary><p>Rehost moves an application largely as-is. Replatform makes selected platform improvements. Repurchase changes products, often to SaaS. Refactor/re-architect redesigns the application for new capabilities.</p></details>
+<details class="topic"><summary>Discovery, Evaluator, and Migration Hub</summary><p>Application Discovery Service gathers infrastructure and dependency information. Migration Evaluator develops the business case. Migration Hub tracks and coordinates migration activity.</p></details>
+<details class="topic"><summary>Application Migration Service</summary><p>MGN supports rehosting physical, virtual, or cloud servers into AWS. It differs from DMS, which moves database data.</p></details>
+<details class="topic"><summary>Fault Injection Service</summary><p>The slides call this Fault Injection Simulator (FIS): controlled failure experiments test resilience. Define scope, monitoring, and stop conditions before running an experiment.</p></details>
+<details class="topic"><summary>Step Functions</summary><p>Orchestrate workflows with steps, branches, parallel work, retries, and error handling. It coordinates services and can support approval processes.</p></details>
+<details class="topic"><summary>Ground Station and Pinpoint</summary><p>Ground Station supports satellite communications and data ingestion. Pinpoint is presented in the deck as a service for segmented customer messaging and campaigns; treat this as a course reference and verify current product availability.</p></details>
+</div>
+<details class="recall"><summary><span>Check your understanding</span>Which migration strategy changes the application architecture to use cloud-native services?</summary><p>Refactor/re-architect. Rehost moves it largely unchanged; replatform makes more limited platform improvements.</p></details>
+</section>
+<section class="study-section" id="architecture" aria-labelledby="architecture-title">
+<div class="section-heading"><span class="section-number" aria-hidden="true">19</span><div><div class="section-meta">Section 19 · PDF pp. 455–490</div><h2 id="architecture-title">AWS architecting &amp; ecosystem</h2><p>Evaluate the whole workload, including how people operate it.</p></div><a class="section-top" href="#top" aria-label="Back to top from AWS architecting &amp; ecosystem">↑</a></div>
+<figure class="concept-map"><ul class="map-nodes">
+<li><strong>Operational excellence</strong><span>Observe, automate, improve</span></li>
+<li><strong>Security</strong><span>Protect identities and data</span></li>
+<li><strong>Reliability</strong><span>Recover and withstand failure</span></li>
+<li><strong>Performance efficiency</strong><span>Use suitable resources</span></li>
+<li><strong>Cost optimization</strong><span>Deliver value efficiently</span></li>
+<li><strong>Sustainability</strong><span>Reduce resource impact</span></li>
+</ul><figcaption>The six Well-Architected pillars are complementary review lenses. Assess design tradeoffs in the context of the workload.</figcaption></figure>
+<div class="topic-grid">
+<details class="topic"><summary>Operational excellence</summary><p>Run operations as code, make small reversible changes, observe outcomes, and learn from incidents. Use tools such as CloudFormation, CloudWatch, and deployment automation.</p></details>
+<details class="topic"><summary>Security</summary><p>Apply least privilege, trace activity, protect data in transit and at rest, automate controls, and practice incident response. Security must span identity, network, application, and operations.</p></details>
+<details class="topic"><summary>Reliability</summary><p>Test recovery, automate repair, manage changes, and avoid shared failure points. Multi-AZ designs, backups, health checks, and appropriate capacity help workloads recover.</p></details>
+<details class="topic"><summary>Performance efficiency</summary><p>Choose resources for actual access patterns, use managed services where suitable, experiment, and measure. Geographic placement, caching, and specialized services can matter more than a bigger server.</p></details>
+<details class="topic"><summary>Cost optimization</summary><p>Attribute spending, reduce idle capacity, match supply to demand, and review commitments. Optimize total business value, including operations effort, rather than only unit price.</p></details>
+<details class="topic"><summary>Sustainability</summary><p>Measure impact, maximize useful utilization, reduce waste, and adapt to more efficient technology. Lifecycle policies and right-sized resources can improve both cost and resource use.</p></details>
+<details class="topic"><summary>General design principles</summary><p>Treat infrastructure as replaceable, automate repeatable work, loosely couple components, test at realistic scale, and evolve with evidence. Managed services reduce the amount of infrastructure you operate.</p></details>
+<details class="topic"><summary>Well-Architected Tool and carbon reporting</summary><p>Use structured workload reviews to identify improvement areas. The Customer Carbon Footprint Tool supports understanding emissions associated with AWS usage.</p></details>
+<details class="topic"><summary>Cloud Adoption Framework perspectives</summary><p>Business connects investment to outcomes; People develops skills and culture; Governance manages risk and oversight. Platform builds the foundation; Security protects it; Operations delivers ongoing service.</p></details>
+<details class="topic"><summary>CAF domains and phases</summary><p>Transformation can change technology, processes, organization, and products. Progress through Envision, Align, Launch, and Scale to identify value, close capability gaps, prove pilots, and expand.</p></details>
+<details class="topic"><summary>Right sizing</summary><p>Match capacity and instance types to measured requirements before and after migration. Revisit decisions as demand changes; a recommendation should be checked against performance and resilience needs.</p></details>
+<details class="topic"><summary>Marketplace and learning</summary><p>Marketplace distributes third-party software and solutions. Documentation, whitepapers, Solutions Library, training, Academy, and re:Post support learning and troubleshooting. Community answers are not a substitute for urgent support.</p></details>
+<details class="topic"><summary>Partners and managed operations</summary><p>Professional Services and the Partner Network provide expertise for projects and migrations. AWS Managed Services helps operate supported environments. Choose the appropriate relationship for advisory, delivery, or ongoing operations.</p></details>
+</div>
+<details class="recall"><summary><span>Check your understanding</span>How is CAF different from the Well-Architected Framework?</summary><p>CAF addresses organizational cloud transformation across six perspectives. Well-Architected reviews workloads across six architecture pillars.</p></details>
+</section>
+<section class="study-section" id="exam" aria-labelledby="exam-title">
+<div class="section-heading"><span class="section-number" aria-hidden="true">20</span><div><div class="section-meta">Section 20 · PDF pp. 491–507</div><h2 id="exam-title">Exam preparation</h2><p>Turn service recognition into reasoned choices.</p></div><a class="section-top" href="#top" aria-label="Back to top from Exam preparation">↑</a></div>
+<figure class="concept-map"><ul class="map-nodes">
+<li><strong>Read the requirement</strong><span>Audience, data, constraints</span></li>
+<li><strong>Eliminate mismatches</strong><span>Wrong purpose or responsibility</span></li>
+<li><strong>Choose the fit</strong><span>Service + operating model</span></li>
+<li><strong>Review the reasoning</strong><span>Explain why alternatives fail</span></li>
+</ul><figcaption>Practice the distinction between similar services, then revisit the section behind each mistake.</figcaption></figure>
+<div class="topic-grid">
+<details class="topic"><summary>Question format</summary><p>The slides describe single-answer multiple-choice and multiple-response questions. Read how many choices are required and identify the business requirement before comparing services.</p></details>
+<details class="topic"><summary>Elimination</summary><p>Discard answers that solve a different problem. Look for clues such as object storage, audit trail, temporary credentials, managed relational database, fan-out, or streaming.</p></details>
+<details class="topic"><summary>Practice deliberately</summary><p>Use the practice bank, explain each choice, and revisit weak sections. Small hands-on exercises help connect names to behavior; remove unused resources afterward.</p></details>
+<details class="topic"><summary>Common comparisons</summary><p>Review CloudWatch/CloudTrail/Config; SQS/SNS/Kinesis; EBS/EFS/S3; RDS replicas/Multi-AZ; IAM/Cognito/Identity Center; Calculator/Cost Explorer/Budgets; CloudFront/Global Accelerator.</p></details>
+<details class="topic"><summary>Exam logistics</summary><p>The PDF includes timing, question counts, scoring, fees, identification, and retake guidance. These are administrative details: use the current official exam guide and booking instructions when scheduling.</p></details>
+<details class="topic"><summary>Continue learning</summary><p>The deck maps further study to architecture, operations, DevOps, security, development, networking, data, and AI/ML roles. Choose the next area based on the work you want to perform.</p></details>
+</div>
+<details class="recall"><summary><span>Check your understanding</span>Can you explain both why an answer fits and why the alternatives do not?</summary><p>That is the goal. Use the practice bank to find gaps, then return to the relevant section and test the distinction again.</p></details>
+</section>
+</div>
+<p id="no-results" hidden>No matching sections. Try a service name such as “EC2” or a concept such as “storage”, or clear the search.</p>
+<div class="next-step"><div><div class="eyebrow">Put the map to work</div><h2>Ready to practice?</h2><p>Use the question bank to check your understanding and identify what to revisit.</p></div><a href="aws-cloud-practitioner.html">Open practice bank →</a></div>
+</div></div>
+</main>
+<footer>AWS learning resources · Course-based study notes · <a href="#top">Back to top ↑</a></footer>
+</body>
+</html>

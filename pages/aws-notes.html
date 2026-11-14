@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="AWS study notes on global, Regional, and Availability Zone resource scopes, with common exam exceptions.">
+<title>AWS notes — Learning &amp; Projects</title>
+<link rel="stylesheet" href="../assets/css/main.css?v=20261103-logo-96">
+<link rel="icon" type="image/png" href="../assets/images/logo.png">
+<link rel="stylesheet" href="../assets/css/site-layout.css?v=2">
+</head>
+<body>
+<a class="skip" href="#notes">Skip to notes</a>
+<header>
+<img class="site-logo" src="../assets/images/logo.png" alt="TPH dragon logo" width="96" height="96">
+<nav aria-label="Main navigation"><a class="action" href="aws.html">← AWS resources</a></nav>
+<div class="eyebrow">Study notes</div>
+<h1>AWS notes</h1>
+<p class="intro">Most AWS services are Regional. Learn which resources span Regions, which belong to one Region, and which live in a single Availability Zone.</p>
+</header>
+<main id="notes">
+<h2>Global, Regional, and zonal scope</h2>
+<div class="grid">
+<section class="card" aria-labelledby="global">
+<h2 id="global">Global scope</h2>
+<p>These resources span AWS Regions rather than being created separately in each Region. Global scope is within an AWS partition, such as standard commercial AWS.</p>
+<ul>
+<li><strong>IAM:</strong> users, groups, roles, and policies.</li>
+<li><strong>CloudFront:</strong> content delivery distributions.</li>
+<li><strong>Route 53:</strong> DNS hosted zones and records.</li>
+<li><strong>Global Accelerator:</strong> accelerators that route traffic to regional endpoints.</li>
+</ul>
+<p><strong>Memory aid:</strong> IAM + CloudFront + Route 53 + Global Accelerator.</p>
+<a class="action" href="https://docs.aws.amazon.com/config/latest/developerguide/select-resources.html">AWS documentation: global resource types</a>
+</section>
+<section class="card" aria-labelledby="regional">
+<h2 id="regional">Regional scope</h2>
+<p>You select a Region, such as <code>ap-southeast-1</code> (Singapore). Resources in another Region are managed separately.</p>
+<ul>
+<li><strong>Compute:</strong> EC2, Lambda, ECS, EKS.</li>
+<li><strong>Storage:</strong> S3 buckets, EFS, EBS.</li>
+<li><strong>Databases:</strong> RDS, Aurora, DynamoDB, ElastiCache, Redshift.</li>
+<li><strong>Networking:</strong> VPC, Elastic Load Balancing, API Gateway.</li>
+<li><strong>Messaging:</strong> SQS, SNS, EventBridge.</li>
+<li><strong>Management and security:</strong> CloudWatch, CloudFormation stacks, KMS keys, Secrets Manager.</li>
+</ul>
+<p>A Regional service can contain resources tied to one Availability Zone. Cross-Region features require their own configuration.</p>
+<a class="action" href="https://docs.aws.amazon.com/general/latest/gr/rande.html">AWS documentation: service endpoints</a>
+</section>
+<section class="card" aria-labelledby="exceptions">
+<h2 id="exceptions">Common exam exceptions</h2>
+<ul>
+<li><strong>S3 buckets are Regional:</strong> a console listing buckets across Regions does not make the buckets global. Data stays in its Region unless explicitly transferred or replicated.</li>
+<li><strong>WAF has both scopes:</strong> global for CloudFront; Regional for resources such as Application Load Balancers and API Gateway REST APIs.</li>
+<li><strong>STS has global and Regional endpoints:</strong> AWS recommends using Regional endpoints.</li>
+<li><strong>Route 53 features differ:</strong> DNS hosted zones are global, but Route 53 Resolver endpoints are Regional.</li>
+</ul>
+<p>Check the specific resource or feature when scope matters; a service name alone does not always tell the whole story.</p>
+</section>
+<section class="card" aria-labelledby="zonal">
+<h2 id="zonal">Availability Zone scope</h2>
+<p>A Region contains multiple Availability Zones (AZs). Some resources belong to exactly one AZ:</p>
+<ul>
+<li><strong>EC2 instance:</strong> runs in a specific AZ.</li>
+<li><strong>EBS volume:</strong> belongs to one AZ and attaches to instances in that AZ.</li>
+<li><strong>VPC subnet:</strong> belongs to one AZ; the VPC itself spans the Region.</li>
+</ul>
+<p><strong>Example:</strong> create a VPC in Singapore, then create subnets in two AZs to place workloads across them.</p>
+<a class="action" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html">AWS documentation: Regions and Zones</a>
+</section>
+</div>
+<section aria-labelledby="sources">
+<h3 id="sources">Further reading</h3>
+<ul>
+<li><a class="action" href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html">S3 bucket Regions</a></li>
+<li><a class="action" href="https://docs.aws.amazon.com/waf/latest/developerguide/how-aws-waf-works-resources.html">WAF resource scopes</a></li>
+<li><a class="action" href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_region-endpoints.html">STS endpoints</a></li>
+<li><a class="action" href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver.html">Route 53 Resolver</a></li>
+</ul>
+</section>
+</main>
+<footer>Learning &amp; Projects · AWS notes · Common services, not an exhaustive catalog</footer>
+</body>
+</html>
