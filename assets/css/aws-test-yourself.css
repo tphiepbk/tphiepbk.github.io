@@ -1,0 +1,15 @@
+.controls{display:flex;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:20px}
+button,select{font:inherit;color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 16px}
+button{cursor:pointer;color:var(--accent);font-weight:700}button:disabled{opacity:.6;cursor:default}
+button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+fieldset{min-width:0;margin:0 0 24px;padding:20px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+legend{max-width:100%;padding:0 8px;font-weight:700;overflow-wrap:anywhere}
+.choice{display:flex;align-items:flex-start;gap:14px;min-height:52px;margin:8px 0;padding:12px;border:2px solid var(--line);border-radius:10px;cursor:pointer}
+.choice input{flex:0 0 26px;width:26px;height:26px;margin:0;accent-color:var(--accent);cursor:inherit}
+.choice span{min-width:0;overflow-wrap:anywhere}
+.choice:hover,.choice:focus-within{border-color:var(--accent)}
+.choice:has(input:checked){border-color:var(--accent);background:#30291f}
+.choice:has(input:disabled){cursor:default}
+.answer-review{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
+.answer-review p{white-space:pre-wrap;overflow-wrap:anywhere}.answer-review summary{cursor:pointer;color:var(--link)}
+#score{font-weight:700;color:var(--accent)}
