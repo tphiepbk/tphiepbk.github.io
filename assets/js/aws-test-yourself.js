@@ -2,12 +2,33 @@
 
 function sampleQuestions(bank, count) {
   if (!Number.isInteger(count) || count < 1 || count > bank.length) throw new Error('Not enough questions for this test.');
+  const quotas = [
+    ['Cloud Concepts', 24],
+    ['Security and Compliance', 30],
+    ['Cloud Technology and Services', 34],
+    ['Billing, Pricing, and Support', 12]
+  ].map(([domain, percent]) => ({ domain, count: Math.floor(count * percent / 100), remainder: count * percent % 100 }));
+  // Largest remainders receive the leftover seats; ties use the domain order above.
+  const remaining = count - quotas.reduce((total, quota) => total + quota.count, 0);
+  quotas.sort((a, b) => b.remainder - a.remainder);
+  for (let i = 0; i < remaining; i++) quotas[i].count++;
+  for (const quota of quotas) {
+    if (bank.filter(question => question.domain === quota.domain).length < quota.count) {
+      throw new Error(`Not enough ${quota.domain} questions for this test.`);
+    }
+  }
+  const available = new Map(quotas.map(quota => [quota.domain, quota.count]));
   const shuffled = [...bank];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-  return shuffled.slice(0, count);
+  return shuffled.filter(question => {
+    const needed = available.get(question.domain);
+    if (!needed) return false;
+    available.set(question.domain, needed - 1);
+    return true;
+  });
 }
 
 function isCorrect(question, selected) {

@@ -26,13 +26,18 @@ assert.deepEqual(bank[0].correct.map(i => bank[0].options[i]), [
 ]);
 assert.deepEqual(bank[65].correct.map(i => bank[65].options[i]), ['Database encryption']);
 assert.equal(isCorrect(bank[65], [0]), false);
-const original = [...bank];
-for (const count of [10, 25, 65]) {
-  const sample = sampleQuestions(bank, count);
-  assert.equal(sample.length, count);
-  assert.equal(new Set(sample.map(question => question.id)).size, count);
+const original = structuredClone(bank);
+const domains = ['Cloud Concepts', 'Security and Compliance', 'Cloud Technology and Services', 'Billing, Pricing, and Support'];
+for (const [count, expected] of [[1, [0, 0, 1, 0]], [10, [3, 3, 3, 1]], [25, [6, 8, 8, 3]], [65, [16, 19, 22, 8]], [100, [24, 30, 34, 12]]]) {
+  for (let run = 0; run < 20; run++) {
+    const sample = sampleQuestions(bank, count);
+    assert.equal(sample.length, count);
+    assert.equal(new Set(sample.map(question => question.id)).size, count);
+    assert.deepEqual(domains.map(domain => sample.filter(question => question.domain === domain).length), expected);
+  }
 }
 assert.deepEqual(bank, original);
+assert.throws(() => sampleQuestions(bank.filter(question => question.domain !== 'Security and Compliance'), 65), /Not enough Security and Compliance questions/);
 assert.throws(() => sampleQuestions(bank, 261));
 assert.throws(() => sampleQuestions(bank, 0));
 assert.throws(() => parseBank('<html>Missing file</html>', 1));
