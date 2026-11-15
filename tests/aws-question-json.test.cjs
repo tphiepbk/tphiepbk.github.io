@@ -14,7 +14,7 @@ const multilinePrompts = {
   '2-58': ['Which tool/service will help you achieve this requirement?', 4, [1]],
   '3-43': ['Which AWS forum/service can be used for troubleshooting an issue or checking for a solution?', 4, [3]]
 };
-for (const exam of [1, 2, 3]) {
+for (const exam of [1, 2, 3, 4]) {
   const source = fs.readFileSync(path.join(__dirname, `../tmp/aws_practice_${exam}.txt`), 'utf8').replace(/\r/g, '');
   const bank = JSON.parse(fs.readFileSync(path.join(__dirname, `../assets/data/aws-cloud-practitioner/practice-${exam}.json`), 'utf8'));
   assert.equal(bank.certification.examCode, 'CLF-C02');
@@ -40,5 +40,5 @@ for (const exam of [1, 2, 3]) {
     assert.ok(question.correct.every(answer => Number.isInteger(answer) && answer >= 0 && answer < question.options.length));
   });
 }
-assert.equal(ids.size, 195);
-console.log('Passed: 195 unique JSON questions match the source prompts, options, answer keys, explanations, and domains.');
+assert.equal(ids.size, 260);
+console.log('Passed: 260 unique JSON questions match the source prompts, options, answer keys, explanations, and domains.');

@@ -5,7 +5,7 @@ const path = require('node:path');
 const { loadAwsQuestionBanks } = require('../assets/js/aws-question-banks.js');
 
 async function main() {
-  const fixtures = [1, 2, 3].map(exam => JSON.parse(fs.readFileSync(path.join(__dirname, `../assets/data/aws-cloud-practitioner/practice-${exam}.json`), 'utf8')));
+  const fixtures = [1, 2, 3, 4].map(exam => JSON.parse(fs.readFileSync(path.join(__dirname, `../assets/data/aws-cloud-practitioner/practice-${exam}.json`), 'utf8')));
   const originalFetch = global.fetch;
   const requested = [];
   let banks;
@@ -20,8 +20,8 @@ async function main() {
   try {
     mockBanks();
     const result = await loadAwsQuestionBanks();
-    assert.equal(result.flatMap(bank => bank.questions).length, 195);
-    assert.deepEqual(requested, [1, 2, 3].map(exam => `../assets/data/aws-cloud-practitioner/practice-${exam}.json`));
+    assert.equal(result.flatMap(bank => bank.questions).length, 260);
+    assert.deepEqual(requested, [1, 2, 3, 4].map(exam => `../assets/data/aws-cloud-practitioner/practice-${exam}.json`));
     for (const corrupt of [
       bank => { bank.certification.examCode = 'OTHER'; },
       bank => { bank.questions = []; },
@@ -40,7 +40,7 @@ async function main() {
     global.fetch = async () => ({ ok: true, json: async () => { throw new SyntaxError('Invalid JSON'); } });
     await assert.rejects(loadAwsQuestionBanks(), /Invalid JSON/);
     mockBanks();
-    assert.equal((await loadAwsQuestionBanks()).length, 3);
+    assert.equal((await loadAwsQuestionBanks()).length, 4);
   } finally {
     global.fetch = originalFetch;
   }
