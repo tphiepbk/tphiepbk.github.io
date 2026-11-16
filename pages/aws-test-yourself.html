@@ -8,10 +8,10 @@
 <title>Udemy - AWS Test Yourself | 390 Questions, 6 Exams</title>
 <link rel="icon" type="image/png" href="../assets/images/logo.png">
 <link rel="stylesheet" href="../assets/css/main.css?v=20261103-logo-96">
-<link rel="stylesheet" href="../assets/css/aws-test-yourself.css?v=2">
+<link rel="stylesheet" href="../assets/css/aws-test-yourself.css?v=5">
 <link rel="stylesheet" href="../assets/css/site-layout.css?v=2">
 <script src="../assets/js/aws-question-banks.js?v=4" defer></script>
-<script src="../assets/js/aws-test-yourself.js?v=4" defer></script>
+<script src="../assets/js/aws-test-yourself.js?v=8" defer></script>
 </head>
 <body>
 <a class="skip" href="#test-yourself">Skip to test</a>
@@ -34,8 +34,17 @@
 <form id="test-form" hidden>
 <h2 id="test-heading" tabindex="-1">Your practice test</h2>
 <p id="score" role="status" tabindex="-1"></p>
+<div class="test-layout">
+<nav class="question-sidebar" aria-label="Jump to question">
+<p id="question-tracker" role="status" aria-live="polite" aria-atomic="true"></p>
+<p class="answer-key">✓ Required number selected · − Too few or too many selected · Gold = current question</p>
+<div id="question-navigation"></div>
+</nav>
+<div class="test-content">
 <div id="questions"></div>
 <button id="submit-test" type="submit">Submit answers</button>
+</div>
+</div>
 </form>
 </main>
 <footer>Learning &amp; Projects · AWS practice · Scores are practice percentages, not official AWS exam scores.</footer>

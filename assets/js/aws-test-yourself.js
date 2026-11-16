@@ -44,7 +44,43 @@ if (typeof document !== 'undefined') {
   const questions = document.getElementById('questions');
   const score = document.getElementById('score');
   const submit = document.getElementById('submit-test');
+  const tracker = document.getElementById('question-tracker');
+  const navigation = document.getElementById('question-navigation');
   let attempt = [];
+  let trackingFrame = false;
+
+  function trackQuestion(index) {
+    const text = `Question ${index + 1} of ${questions.children.length}`;
+    if (tracker.textContent !== text) tracker.textContent = text;
+    [...navigation.children].forEach((button, number) => {
+      if (number === index) button.setAttribute('aria-current', 'step');
+      else button.removeAttribute('aria-current');
+    });
+  }
+
+  function trackVisibleQuestion() {
+    if (!questions.children.length) return;
+    const top = window.matchMedia('(max-width:760px)').matches
+      ? navigation.parentElement.getBoundingClientRect().bottom + 16 : 16;
+    const index = [...questions.children].findIndex(question => question.getBoundingClientRect().bottom > top);
+    trackQuestion(index === -1 ? questions.children.length - 1 : index);
+  }
+
+  function scheduleTracking() {
+    if (trackingFrame) return;
+    trackingFrame = true;
+    requestAnimationFrame(() => {
+      trackingFrame = false;
+      trackVisibleQuestion();
+    });
+  }
+
+  window.addEventListener('scroll', scheduleTracking, { passive: true });
+  window.addEventListener('resize', scheduleTracking);
+  questions.addEventListener('focusin', event => {
+    const index = [...questions.children].findIndex(question => question.contains(event.target));
+    if (index !== -1) trackQuestion(index);
+  });
 
   function element(tag, text, className) {
     const node = document.createElement(tag);
@@ -61,8 +97,29 @@ if (typeof document !== 'undefined') {
       const banks = await loadAwsQuestionBanks();
       const next = sampleQuestions(banks.flatMap(bank => bank.questions), Number(document.getElementById('question-count').value));
       const fragment = document.createDocumentFragment();
+      const links = document.createDocumentFragment();
       next.forEach((question, index) => {
         const fieldset = document.createElement('fieldset');
+        fieldset.id = `test-question-${index + 1}`;
+        fieldset.tabIndex = -1;
+        const jump = element('button', String(index + 1));
+        jump.type = 'button';
+        jump.setAttribute('aria-label', `Go to question ${index + 1}, unanswered`);
+        jump.setAttribute('aria-controls', fieldset.id);
+        fieldset.addEventListener('change', () => {
+          const selected = fieldset.querySelectorAll('input:checked').length;
+          const answered = selected === question.correct.length;
+          jump.setAttribute('data-answered', String(answered));
+          jump.textContent = `${index + 1}${answered ? ' ✓' : selected ? ' −' : ''}`;
+          const state = answered ? 'answered' : selected ? 'incomplete' : 'unanswered';
+          jump.setAttribute('aria-label', `Go to question ${index + 1}, ${state}, ${selected} of ${question.correct.length} answers selected`);
+        });
+        jump.addEventListener('click', () => {
+          fieldset.focus({ preventScroll: true });
+          fieldset.scrollIntoView({ block: 'start' });
+          trackQuestion(index);
+        });
+        links.append(jump);
         fieldset.append(element('legend', `${index + 1}. ${question.prompt}`));
         fieldset.append(element('p', `Select ${question.correct.length} answer${question.correct.length === 1 ? '' : 's'}.`));
         question.options.forEach((option, optionIndex) => {
@@ -78,9 +135,11 @@ if (typeof document !== 'undefined') {
       });
       attempt = next;
       questions.replaceChildren(fragment);
+      navigation.replaceChildren(links);
       score.textContent = '';
       submit.disabled = false;
       form.hidden = false;
+      trackQuestion(0);
       status.textContent = `${attempt.length} questions ready. Answers stay hidden until you submit. Unanswered questions earn no points.`;
       document.getElementById('test-heading').focus();
     } catch (error) {
