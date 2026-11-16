@@ -2,8 +2,8 @@
 
 async function loadAwsQuestionBanks() {
   const ids = new Set();
-  // shortcut: four CLF-C02 banks; use a certificate catalog when adding other certificates.
-  return Promise.all([1, 2, 3, 4].map(async exam => {
+  // shortcut: six CLF-C02 banks; use a certificate catalog when adding other certificates.
+  return Promise.all([1, 2, 3, 4, 5, 6].map(async exam => {
     const response = await fetch(`../assets/data/aws-cloud-practitioner/practice-${exam}.json`);
     if (!response.ok) throw new Error(`Bank ${exam} returned HTTP ${response.status}.`);
     const bank = await response.json();

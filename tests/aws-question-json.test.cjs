@@ -12,9 +12,14 @@ const multilinePrompts = {
   '1-65': ['What will be the outcome on the overall bill once the credits are used? (Select two)', 5, [0, 2]],
   '2-47': ['Which AWS technology/service will provide the necessary low-latency access to the end-users?', 4, [2]],
   '2-58': ['Which tool/service will help you achieve this requirement?', 4, [1]],
-  '3-43': ['Which AWS forum/service can be used for troubleshooting an issue or checking for a solution?', 4, [3]]
+  '3-43': ['Which AWS forum/service can be used for troubleshooting an issue or checking for a solution?', 4, [3]],
+  '5-12': ['Which migration strategy is the most appropriate for this scenario?', 4, [2]],
+  '5-26': ['Which AWS tool/service is an optimal fit for this requirement?', 4, [2]],
+  '5-38': ['Which AWS service will help implement this requirement with the least effort?', 4, [1]],
+  '6-4': ['Which of the below services are encrypted by default and need no user intervention to enable encryption?', 4, [3]],
+  '6-63': ['Which service will you use to decouple this architecture, without any communication loss between the two systems?', 4, [3]]
 };
-for (const exam of [1, 2, 3, 4]) {
+for (const exam of [1, 2, 3, 4, 5, 6]) {
   const source = fs.readFileSync(path.join(__dirname, `../tmp/aws_practice_${exam}.txt`), 'utf8').replace(/\r/g, '');
   const bank = JSON.parse(fs.readFileSync(path.join(__dirname, `../assets/data/aws-cloud-practitioner/practice-${exam}.json`), 'utf8'));
   assert.equal(bank.certification.examCode, 'CLF-C02');
@@ -40,5 +45,5 @@ for (const exam of [1, 2, 3, 4]) {
     assert.ok(question.correct.every(answer => Number.isInteger(answer) && answer >= 0 && answer < question.options.length));
   });
 }
-assert.equal(ids.size, 260);
-console.log('Passed: 260 unique JSON questions match the source prompts, options, answer keys, explanations, and domains.');
+assert.equal(ids.size, 390);
+console.log('Passed: 390 unique JSON questions match the source prompts, options, answer keys, explanations, and domains.');

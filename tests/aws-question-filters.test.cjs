@@ -11,7 +11,7 @@ const control = (dataset = {}) => ({
 const cards = [
   { id: 'q-1-1', textContent: 'Amazon S3 explanation', dataset: { category: 'T', exam: '1' } },
   { id: 'q-2-1', textContent: 'Amazon S3 encryption', dataset: { category: 'S', exam: '2' } },
-  { id: 'q-1-2', textContent: 'IAM security', dataset: { category: 'S', exam: '1' } }
+  { id: 'q-6-1', textContent: 'IAM security', dataset: { category: 'S', exam: '6' } }
 ];
 const buttons = ['', 'T', 'S'].map(category => control({ category }));
 const domains = ['T', 'S'].map(category => ({
@@ -44,6 +44,11 @@ assert.deepEqual(cards.map(card => card.hidden), [true, false, false]);
 assert.equal(domains[0].hidden, true);
 assert.equal(domains[1].count.textContent, '2 questions');
 assert.equal(buttons[2].attributes['aria-pressed'], 'true');
+controls.reset.events.click();
+controls.exam.value = '6';
+controls.exam.events.change();
+assert.deepEqual(cards.map(card => card.hidden), [true, true, false]);
+assert.equal(controls.results.textContent, 'Showing 1 of 3 questions.');
 controls.reset.events.click();
 assert.ok(cards.every(card => !card.hidden));
 assert.equal(controls.empty.hidden, true);

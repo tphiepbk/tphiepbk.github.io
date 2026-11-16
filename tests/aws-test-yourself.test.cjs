@@ -6,7 +6,7 @@ const { sampleQuestions, isCorrect } = require('../assets/js/aws-test-yourself.j
 
 const { parseBank } = require('./parse-aws-bank.cjs');
 
-const bank = [1, 2, 3, 4].flatMap(exam => {
+const bank = [1, 2, 3, 4, 5, 6].flatMap(exam => {
   const { questions } = JSON.parse(fs.readFileSync(path.join(__dirname, `../assets/data/aws-cloud-practitioner/practice-${exam}.json`), 'utf8'));
   assert.equal(questions.length, 65);
   for (const question of questions) {
@@ -18,7 +18,7 @@ const bank = [1, 2, 3, 4].flatMap(exam => {
   }
   return questions;
 });
-assert.equal(bank.length, 260);
+assert.equal(bank.length, 390);
 assert.deepEqual(bank[0].correct.map(i => bank[0].options[i]), [
   'Amazon Elastic Compute Cloud (Amazon EC2)',
   'Amazon DynamoDB',
@@ -38,8 +38,8 @@ for (const [count, expected] of [[1, [0, 0, 1, 0]], [10, [3, 3, 3, 1]], [25, [6,
 }
 assert.deepEqual(bank, original);
 assert.throws(() => sampleQuestions(bank.filter(question => question.domain !== 'Security and Compliance'), 65), /Not enough Security and Compliance questions/);
-assert.throws(() => sampleQuestions(bank, 261));
+assert.throws(() => sampleQuestions(bank, bank.length + 1));
 assert.throws(() => sampleQuestions(bank, 0));
 assert.throws(() => parseBank('<html>Missing file</html>', 1));
 assert.throws(() => parseBank('Question 1\nCorrect\nPrompt\nOption A\nOption B', 1));
-console.log('Passed: all 260 questions, answer keys, exact-match scoring, sampling, and invalid-bank checks.');
+console.log('Passed: all 390 questions, answer keys, exact-match scoring, sampling, and invalid-bank checks.');
